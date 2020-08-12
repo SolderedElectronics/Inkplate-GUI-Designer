@@ -1,0 +1,74 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+.header {
+    background-color: #264653;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+.footer {
+    height: 25px;
+    background-color: #264653;
+    text-align: center;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    overflow-y: auto;
+}
+
+.scrollWrap {
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    height: 100%;
+    direction: rtl;
+}
+
+.components {
+    display: flex;
+    min-height: min-content;
+}
+
+.primitiveItem {
+    padding-left: 3px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    padding-right: 3px !important;
+
+}
+
+.screen {
+    flex: 1
+}
+
+.settings {
+    width: 200px;
+}

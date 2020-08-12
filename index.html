@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inkplate GUI designer</title>
+    <link href="index.css" rel="stylesheet" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <div class="dropdown" style="margin-left: 10px; margin-right: 10px;">
+          <b>GUI &nbsp; </b>
+          <button
+            class="btn btn-secondary btn-sm dropdown-toggle"
+            type="button"
+            id="file"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            style="padding-bottom: 1px; padding-top: 1px;"
+          >
+            File
+          </button>
+          <div class="dropdown-menu" aria-labelledby="file">
+            <button class="dropdown-item" type="button">Action</button>
+            <button class="dropdown-item" type="button">Another action</button>
+            <button class="dropdown-item" type="button">
+              Something else here
+            </button>
+          </div>
+
+          <button
+            class="btn btn-secondary btn-sm dropdown-toggle"
+            type="button"
+            id="edit"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            style="padding-bottom: 1px; padding-top: 1px;"
+          >
+            Edit
+          </button>
+          <div class="dropdown-menu" aria-labelledby="edit">
+            <button class="dropdown-item" type="button">Action</button>
+            <button class="dropdown-item" type="button">Another action</button>
+            <button class="dropdown-item" type="button">
+              Something else here
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="components shadow bg-white rounded">
+          <div class="scrollWrap" style="margin: 0; width: 100%;">
+            <div
+              class="list-group"
+              style="font-size: 12px; padding: 0; margin: 0;"
+            >
+              <h4 class="primitiveItem active list-group-item">
+                Primitives
+              </h4>
+
+              <button
+                class="list-group-item list-group-item-action primitiveItem"
+                onclick="selectComponent('line')"
+              >
+                Line
+              </button>
+
+              <button
+                class="list-group-item list-group-item-action primitiveItem"
+                onclick="selectComponent('rect')"
+              >
+                Rectangle
+              </button>
+
+              <button
+                class="list-group-item list-group-item-action primitiveItem"
+                onclick="selectComponent('circle')"
+              >
+                Circle
+              </button>
+
+              <button
+                class="list-group-item list-group-item-action primitiveItem"
+                onclick="selectComponent('triangle')"
+              >
+                Triangle
+              </button>
+
+              <button
+                class="list-group-item list-group-item-action primitiveItem"
+                onclick="selectComponent('text')"
+              >
+                Text
+              </button>
+
+              <hr />
+              <h4 class="primitiveItem active list-group-item">
+                Widgets
+              </h4>
+
+              <button
+                class="list-group-item list-group-item-action primitiveItem"
+              >
+                Vestibulum at eros
+              </button>
+
+              <hr />
+              <h4 class="primitiveItem active list-group-item">
+                Fonts
+              </h4>
+
+              <button
+                class="list-group-item list-group-item-action primitiveItem"
+              >
+                Vestibulum at eros
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="screen"
+          id="screen"
+          style="width: 99.9%; height: 99.9%; overflow: hidden;"
+        >
+          <canvas style="width: 100%; height: 100%;" id="canvas"></canvas>
+        </div>
+        <div class="settings shadow bg-white rounded">a</div>
+      </div>
+      <div class="footer shadow">Copyright: e-radionica.com 2020</div>
+    </div>
+
+    <template id="standardHeading">
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text inputText" id="inputGroup-sizing-sm"
+            >Small</span
+          >
+        </div>
+        <input
+          type="text"
+          class="form-control inputElement"
+          aria-label="Small"
+          aria-describedby="inputGroup-sizing-sm"
+        />
+      </div>
+    </template>
+
+    <template id="standardInput">
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text inputText" id="inputGroup-sizing-sm"
+            >Small</span
+          >
+        </div>
+        <input
+          type="text"
+          class="form-control inputElement"
+          aria-label="Small"
+          aria-describedby="inputGroup-sizing-sm"
+        />
+      </div>
+    </template>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="primitives.js"></script>
+    <script src="Inkplate.js"></script>
+    <script src="UI.js"></script>
+    <script src="Screen.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
