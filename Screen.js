@@ -30,21 +30,52 @@ class Screen {
 
         this.mouseOnEntity = null;
 
+        this.currentlySelected = null;
+
         this.entities = [
-            new line(0, 0, 100, 100, 0, null, 1),
-            new rect(0, 0, 100, 100, 0, false, 0, false),
-            new circle(100, 100, 50, 4, true),
-            new triangle(0, 0, 100, 100, 100, 0, 5, true),
+            //new line(0, 0, 100, 100, 0, null, 1),
+            //new rect(0, 0, 100, 100, 0, false, 0, false),
+            //new circle(100, 100, 50, 4, true),
+            //new triangle(0, 0, 100, 100, 100, 0, 5, true),
             new text(0, 100, "test", "32px Ariel")
         ];
     }
 
     selectComponent(component) {
-        document.getElementsByClassName("settings")[0].innerHTML = "";
+        if (!(component in primitiveDict))
+            return;
 
-        let clone = document.getElementById("standardInput").content.cloneNode(true);
+        let editable = (new primitiveDict[component]).editable;
 
-        document.getElementsByClassName("settings")[0].appendChild(clone);
+        settingsDict["clear"]();
+        settingsDict["heading"](component);
+
+        for (const [key, value] of Object.entries(editable)) {
+            settingsDict[value.type](key, value);
+        }
+
+        settingsDict["makeButton"]();
+    }
+
+    addComponent(settings) {
+        if (settings.type == "line")
+            this.entities.push(new primitiveDict["line"](
+                settings["start"].x,
+                settings["start"].y,
+                settings["end"].x,
+                settings["end"].y,
+                settings["color"],
+                settings["gradient"],
+                settings["thickness"]));
+        else if (settings.type == "rect") {
+            this.entities.push(new primitiveDict["rect"]());
+        } else if (settings.type == "circle") {
+            this.entities.push(new primitiveDict["circle"]());
+        } else if (settings.type == "triangle") {
+            this.entities.push(new primitiveDict["triangle"]());
+        } else if (settings.type == "text") {
+            this.entities.push(new primitiveDict["text"]());
+        }
     }
 
     mouseMove(e) {

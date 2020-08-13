@@ -1,6 +1,7 @@
 class line {
     constructor(x0, y0, x1, y1, c0, c1, t) {
         this.type = "line";
+
         this["start"] = {
             x: x0,
             y: y0,
@@ -12,6 +13,7 @@ class line {
                 return (this.x - _x) ** 2 + (this.y - _y) ** 2;
             }
         }
+
         this["end"] = {
             x: x1,
             y: y1,
@@ -23,6 +25,7 @@ class line {
                 return (this.x - _x) ** 2 + (this.y - _y) ** 2;
             }
         }
+
         this["color"] = c0;
         this["thickness"] = t;
         this["gradient"] = c1;
@@ -31,7 +34,48 @@ class line {
             "start",
             "end",
         ];
+
         this.z = 0
+
+        this.editable = {
+            "start": {
+                type: "coordinate",
+                default: {
+                    x: 10,
+                    y: 10
+                },
+                optional: false
+            },
+            "end": {
+                type: "coordinate",
+                default: {
+                    x: 500,
+                    y: 500
+                },
+                optional: false
+            },
+            "color": {
+                type: "int",
+                min: 0,
+                max: 7,
+                default: 0,
+                optional: true
+            },
+            "thickness": {
+                type: "float",
+                min: 1,
+                max: 30,
+                default: 1,
+                optional: true
+            },
+            "gradient": {
+                type: "int",
+                min: 0,
+                max: 7,
+                default: 0,
+                optional: true
+            }
+        };
     }
 }
 
@@ -165,4 +209,12 @@ class text {
         ];
         this.z = 0;
     }
+}
+
+let primitiveDict = {
+    "line": line,
+    "circle": circle,
+    "rect": rect,
+    "triangle": triangle,
+    "text": text,
 }

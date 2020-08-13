@@ -137,7 +137,12 @@
       <div class="footer shadow">Copyright: e-radionica.com 2020</div>
     </div>
 
-    <template id="standardHeading">
+    <template id="headingTemplate">
+      <h3 id="content">aaa</h3>
+      <hr />
+    </template>
+
+    <template id="boolTemplate">
       <div class="input-group input-group-sm">
         <div class="input-group-prepend">
           <span class="input-group-text inputText" id="inputGroup-sizing-sm"
@@ -153,7 +158,55 @@
       </div>
     </template>
 
-    <template id="standardInput">
+    <template id="intTemplate">
+      <div class="input-group input-group-sm" style="margin-bottom: 2px;">
+        <div class="input-group-prepend">
+          <span class="input-group-text inputText" id="inputGroup-sizing-sm">
+            <input
+              type="checkbox"
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              class="mainCheckbox"
+              onclick="changeCheckbox(this)"
+            />
+            &nbsp;
+            <span class="name"></span>
+          </span>
+        </div>
+        <input
+          type="text"
+          class="form-control inputElement mainInput"
+          aria-label="Small"
+          aria-describedby="inputGroup-sizing-sm"
+        />
+      </div>
+    </template>
+
+    <template id="floatTemplate">
+      <div class="input-group input-group-sm" style="margin-bottom: 2px;">
+        <div class="input-group-prepend">
+          <span class="input-group-text inputText" id="inputGroup-sizing-sm">
+            <input
+              type="checkbox"
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              class="mainCheckbox"
+              onclick="changeCheckbox(this)"
+            />
+            &nbsp;
+            <span class="name"></span>
+          </span>
+        </div>
+        <input
+          type="text"
+          class="form-control inputElement mainInput"
+          aria-label="Small"
+          aria-describedby="inputGroup-sizing-sm"
+        />
+      </div>
+    </template>
+
+    <template id="coordinateTemplate">
       <div class="input-group input-group-sm">
         <div class="input-group-prepend">
           <span class="input-group-text inputText" id="inputGroup-sizing-sm"
@@ -166,12 +219,43 @@
           aria-label="Small"
           aria-describedby="inputGroup-sizing-sm"
         />
+      </div>
+    </template>
+
+    <template id="textTemplate">
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text inputText" id="inputGroup-sizing-sm"
+            >Small</span
+          >
+        </div>
+        <input
+          type="text"
+          class="form-control inputElement"
+          aria-label="Small"
+          aria-describedby="inputGroup-sizing-sm"
+        />
+      </div>
+    </template>
+
+    <template id="buttonTemplate">
+      <div class="input-group input-group-sm">
+        <button
+          type="text"
+          class="form-control"
+          aria-label="Small"
+          aria-describedby="inputGroup-sizing-sm"
+          onclick="addEntity()"
+        >
+          Make entity
+        </button>
       </div>
     </template>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="settingsTab.js"></script>
     <script src="primitives.js"></script>
     <script src="Inkplate.js"></script>
     <script src="UI.js"></script>
