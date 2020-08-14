@@ -250,7 +250,7 @@ class Inkplate {
 
         for (var i = 1; i < words.length; i++) {
             let word = words[i];
-            let width = ctx.measureText(currentLine + " " + word).width;
+            let width = ctx.measureText(currentLine + " " + word).width - screen.xOffset;
             if (width < maxWidth) {
                 currentLine += " " + word;
             } else {

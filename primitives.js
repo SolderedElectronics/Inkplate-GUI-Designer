@@ -59,7 +59,7 @@ class line {
                 min: 0,
                 max: 7,
                 default: 0,
-                optional: true
+                optional: false
             },
             "thickness": {
                 type: "float",
@@ -100,11 +100,39 @@ class circle {
             "center",
         ];
         this.z = 0;
+        this.editable = {
+            "center": {
+                type: "coordinate",
+                default: {
+                    x: 400,
+                    y: 300
+                },
+                optional: false
+            },
+            "radius": {
+                type: "int",
+                min: 0,
+                max: 1500,
+                default: 100,
+                optional: false
+            },
+            "color": {
+                type: "int",
+                min: 0,
+                max: 7,
+                default: 0,
+                optional: false
+            },
+            "fill": {
+                type: "bool",
+                default: true,
+            },
+        };
     }
 }
 
 class rect {
-    constructor(x0, y0, x1, y1, c, rounded, r, fill) {
+    constructor(x0, y0, x1, y1, c, r, fill) {
         this.type = "rect";
         this["a"] = {
             x: x0,
@@ -128,8 +156,6 @@ class rect {
                 return (this.x - _x) ** 2 + (this.y - _y) ** 2;
             },
         }
-        this["rounded"] = rounded;
-        this["r"] = r;
         this["fill"] = fill;
         this["radius"] = r;
         this["color"] = c;
@@ -138,6 +164,42 @@ class rect {
             "b"
         ];
         this.z = 0;
+        this.editable = {
+            "a": {
+                type: "coordinate",
+                default: {
+                    x: 100,
+                    y: 100
+                },
+                optional: false
+            },
+            "b": {
+                type: "coordinate",
+                default: {
+                    x: 700,
+                    y: 500
+                },
+                optional: false
+            },
+            "color": {
+                type: "int",
+                min: 0,
+                max: 7,
+                default: 0,
+                optional: false
+            },
+            "fill": {
+                type: "bool",
+                default: true,
+            },
+            "radius": {
+                type: "int",
+                min: 0,
+                max: 800,
+                default: 0,
+                optional: true
+            }
+        }
     }
 }
 
@@ -184,7 +246,45 @@ class triangle {
             "b",
             "c",
         ];
-        this.z = 0
+        this.z = 0;
+
+        this.editable = {
+            "a": {
+                type: "coordinate",
+                default: {
+                    x: 100,
+                    y: 100
+                },
+                optional: false
+            },
+            "b": {
+                type: "coordinate",
+                default: {
+                    x: 500,
+                    y: 500
+                },
+                optional: false
+            },
+            "c": {
+                type: "coordinate",
+                default: {
+                    x: 100,
+                    y: 500
+                },
+                optional: false
+            },
+            "color": {
+                type: "int",
+                min: 0,
+                max: 7,
+                default: 0,
+                optional: false
+            },
+            "fill": {
+                type: "bool",
+                default: true,
+            },
+        }
     }
 }
 
@@ -208,6 +308,27 @@ class text {
             "cursor"
         ];
         this.z = 0;
+
+        this.editable = {
+            "cursor": {
+                type: "coordinate",
+                default: {
+                    x: 100,
+                    y: 100
+                },
+                optional: false
+            },
+            "content": {
+                type: "text",
+                default: "Hello World",
+                optional: false
+            },
+            "font": {
+                type: "text",
+                default: "24px Arial",
+                optional: false
+            }
+        };
     }
 }
 

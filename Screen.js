@@ -29,7 +29,6 @@ class Screen {
         this.canvas.addEventListener("mouseup", this.mouseUp.bind(this));
 
         this.mouseOnEntity = null;
-
         this.currentlySelected = null;
 
         this.entities = [
@@ -41,14 +40,16 @@ class Screen {
         ];
     }
 
-    selectComponent(component) {
-        if (!(component in primitiveDict))
+    editComponent(component) {
+        this.currentlySelected = component;
+
+        if (component.type == "widget")
             return;
 
-        let editable = (new primitiveDict[component]).editable;
+        let editable = component.editable;
 
         settingsDict["clear"]();
-        settingsDict["heading"](component);
+        settingsDict["heading"]("Editing " + component.type);
 
         for (const [key, value] of Object.entries(editable)) {
             settingsDict[value.type](key, value);
@@ -57,7 +58,48 @@ class Screen {
         settingsDict["makeButton"]();
     }
 
+    selectComponent(component) {
+        if (!(component in primitiveDict))
+            return;
+
+        this.currentlySelected = null;
+
+        let editable = (new primitiveDict[component]).editable;
+
+        settingsDict["clear"]();
+        settingsDict["heading"]("Create new " + component);
+
+        for (const [key, value] of Object.entries(editable)) {
+            settingsDict[value.type](key, value);
+        }
+
+        settingsDict["makeButton"]();
+    }
+
+
+    selectWidget(widgetName) {
+        if (!widgets.find(el => el.name == widgetName))
+            return;
+
+        let widget = widgets.find(el => el.name == widgetName);
+
+        this.currentlySelected = widget;
+
+        settingsDict["clear"]();
+        settingsDict["heading"]("Editing widget");
+        settingsDict["textArea"]("Variables Edit", {
+            type: "textArea",
+            default: JSON.stringify(widget.variables, undefined, 4),
+            optional: false
+        });
+
+        settingsDict["makeButton"]();
+        this.entities.push(widget);
+    }
+
     addComponent(settings) {
+        this.currentlySelected = null;
+
         if (settings.type == "line")
             this.entities.push(new primitiveDict["line"](
                 settings["start"].x,
@@ -68,14 +110,44 @@ class Screen {
                 settings["gradient"],
                 settings["thickness"]));
         else if (settings.type == "rect") {
-            this.entities.push(new primitiveDict["rect"]());
+            this.entities.push(new primitiveDict["rect"](
+                settings["a"].x,
+                settings["a"].y,
+                settings["b"].x,
+                settings["b"].y,
+                settings["color"],
+                settings["radius"],
+                settings["fill"],
+            ));
         } else if (settings.type == "circle") {
-            this.entities.push(new primitiveDict["circle"]());
+            this.entities.push(new primitiveDict["circle"](
+                settings["center"].x,
+                settings["center"].y,
+                settings["radius"],
+                settings["colors"],
+                settings["fill"]
+            ));
         } else if (settings.type == "triangle") {
-            this.entities.push(new primitiveDict["triangle"]());
+            this.entities.push(new primitiveDict["triangle"](
+                settings["a"].x,
+                settings["a"].y,
+                settings["b"].x,
+                settings["b"].y,
+                settings["c"].x,
+                settings["c"].y,
+                settings["color"],
+                settings["fill"],
+            ));
         } else if (settings.type == "text") {
-            this.entities.push(new primitiveDict["text"]());
+            this.entities.push(new primitiveDict["text"](
+                settings["cursor"].x,
+                settings["cursor"].y,
+                settings["content"],
+                settings["font"]
+            ));
         }
+
+        return this.entities[this.entities.length - 1];
     }
 
     mouseMove(e) {
@@ -125,6 +197,15 @@ class Screen {
     moveEntities() {
         if (!this.mouseOnEntity || !this.mouse.down) return;
 
+        if (this.currentlySelected != this.mouseOnComponent) {
+            this.editComponent({
+                type: this.currentlySelected.type,
+                ...this.mouseOnComponent
+            });
+        }
+
+        updateValues();
+
         this.mouseOnEntity.set(this.mouse.x, this.mouse.y);
     }
 
@@ -155,18 +236,20 @@ class Screen {
                 else
                     this.display.drawTriangle(e["a"].x, e["a"].y, e["b"].x, e["b"].y, e["c"].x, e["c"].y, e["color"]);
             } else if (e.type == "rect") {
-                if (e.rounded && e.fill)
-                    this.display.fillRoundRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["r"], e["color"]);
-                else if (e.rounded && !e.fill)
-                    this.display.drawRoundRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["r"], e["color"]);
-                else if (!e.rounded && e.fill)
+                if (e.radius && e.fill)
+                    this.display.fillRoundRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["radius"], e["color"]);
+                else if (e.radius && !e.fill)
+                    this.display.drawRoundRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["radius"], e["color"]);
+                else if (!e.radius && e.fill)
                     this.display.fillRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["color"]);
-                else if (!e.rounded && !e.fill)
+                else if (!e.radius && !e.fill)
                     this.display.drawRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["color"]);
             } else if (e.type == "text") {
                 this.display.setFont(e["font"]);
                 this.display.setCursor(e["cursor"].x, e["cursor"].y);
                 this.display.print(e["content"]);
+            } else if (e.type == "widget") {
+                e.draw(this.display);
             }
         }
     }
@@ -175,14 +258,23 @@ class Screen {
         if (this.mouse.down)
             return;
         let p = [];
-        for (const e of this.entities)
-            for (const m of e.modifiers)
-                if (e[m].distSqr(this.mouse.x, this.mouse.y) < 150) {
+        for (const e of this.entities) {
+            for (const m of e.modifiers) {
+                if (e.type != "widget" && e[m].distSqr(this.mouse.x, this.mouse.y) < 150) {
                     p.push({
                         d: e[m].distSqr(this.mouse.x, this.mouse.y),
-                        e: e[m]
+                        e: e[m],
+                        g: e
+                    });
+                } else if (e.type == "widget" && e.variables[m].distSqr(this.mouse.x, this.mouse.y) < 150) {
+                    p.push({
+                        d: e.variables[m].distSqr(this.mouse.x, this.mouse.y),
+                        e: e.variables[m],
+                        g: e.variables
                     });
                 }
+            }
+        }
         if (p.length == 0)
             this.mouseOnEntity = null;
         else {
@@ -192,7 +284,12 @@ class Screen {
                 return 0;
             });
             this.mouseOnEntity = p[0].e;
-            this.ui.drawPicker(p[0].e.x, p[0].e.y);
+            this.mouseOnComponent = p[0].g;
+
+            if (this.currentlySelected.type == "widget")
+                this.ui.drawPicker(p[0].e.default.x, p[0].e.default.y);
+            else
+                this.ui.drawPicker(p[0].e.x, p[0].e.y);
         }
     }
 

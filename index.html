@@ -106,11 +106,7 @@
                 Widgets
               </h4>
 
-              <button
-                class="list-group-item list-group-item-action primitiveItem"
-              >
-                Vestibulum at eros
-              </button>
+              <div id="widgets"></div>
 
               <hr />
               <h4 class="primitiveItem active list-group-item">
@@ -145,15 +141,24 @@
     <template id="boolTemplate">
       <div class="input-group input-group-sm">
         <div class="input-group-prepend">
-          <span class="input-group-text inputText" id="inputGroup-sizing-sm"
-            >Small</span
-          >
+          <span class="input-group-text inputText" id="inputGroup-sizing-sm">
+            <input
+              type="checkbox"
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              class="mainCheckbox"
+              onclick="changeCheckbox(this)"
+            />
+            &nbsp;
+            <span class="name"></span>
+          </span>
         </div>
         <input
-          type="text"
-          class="form-control inputElement"
+          type="checkbox"
+          class="form-control inputElement mainInput"
           aria-label="Small"
           aria-describedby="inputGroup-sizing-sm"
+          onchange="inputChanged(this)"
         />
       </div>
     </template>
@@ -178,6 +183,7 @@
           class="form-control inputElement mainInput"
           aria-label="Small"
           aria-describedby="inputGroup-sizing-sm"
+          onchange="inputChanged(this)"
         />
       </div>
     </template>
@@ -202,22 +208,7 @@
           class="form-control inputElement mainInput"
           aria-label="Small"
           aria-describedby="inputGroup-sizing-sm"
-        />
-      </div>
-    </template>
-
-    <template id="coordinateTemplate">
-      <div class="input-group input-group-sm">
-        <div class="input-group-prepend">
-          <span class="input-group-text inputText" id="inputGroup-sizing-sm"
-            >Small</span
-          >
-        </div>
-        <input
-          type="text"
-          class="form-control inputElement"
-          aria-label="Small"
-          aria-describedby="inputGroup-sizing-sm"
+          onchange="inputChanged(this)"
         />
       </div>
     </template>
@@ -225,16 +216,51 @@
     <template id="textTemplate">
       <div class="input-group input-group-sm">
         <div class="input-group-prepend">
-          <span class="input-group-text inputText" id="inputGroup-sizing-sm"
-            >Small</span
-          >
+          <span class="input-group-text inputText" id="inputGroup-sizing-sm">
+            <input
+              type="checkbox"
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              class="mainCheckbox"
+              onclick="changeCheckbox(this)"
+            />
+            &nbsp;
+            <span class="name"></span>
+          </span>
         </div>
         <input
           type="text"
-          class="form-control inputElement"
+          class="form-control inputElement mainInput"
           aria-label="Small"
           aria-describedby="inputGroup-sizing-sm"
+          onchange="inputChanged(this)"
         />
+      </div>
+    </template>
+
+    <template id="textAreaTemplate">
+      <div class="input-group input-group-sm">
+        <div class="input-group">
+          <span class="input-group-text inputText" id="inputGroup-sizing-sm">
+            <textarea
+              type="checkbox"
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              class="mainCheckbox"
+              onclick="changeCheckbox(this)"
+            ></textarea>
+            &nbsp;
+            <span class="name"></span>
+          </span>
+        </div>
+        <textarea
+          style="height: 400px;"
+          type="text"
+          class="form-control inputElement mainInput"
+          aria-label="Small"
+          aria-describedby="inputGroup-sizing-sm"
+          onchange="widgetChanged(this)"
+        ></textarea>
       </div>
     </template>
 
@@ -246,6 +272,7 @@
           aria-label="Small"
           aria-describedby="inputGroup-sizing-sm"
           onclick="addEntity()"
+          id="desc"
         >
           Make entity
         </button>
@@ -257,6 +284,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="settingsTab.js"></script>
     <script src="primitives.js"></script>
+    <script src="widgets.js"></script>
     <script src="Inkplate.js"></script>
     <script src="UI.js"></script>
     <script src="Screen.js"></script>
