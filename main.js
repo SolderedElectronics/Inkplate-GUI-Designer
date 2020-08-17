@@ -10,7 +10,7 @@ for (let w of widgets) {
     el.classList = "list-group-item list-group-item-action primitiveItem".split();
     el.innerHTML = w.name;
     el.onclick = () => {
-        screen.selectWidget(w.name)
+        screen.addWidget(w.name)
     };
     document.getElementById("widgets").appendChild(el);
 }

@@ -29,7 +29,6 @@ class Screen {
         this.canvas.addEventListener("mouseup", this.mouseUp.bind(this));
 
         this.mouseOnEntity = null;
-        this.currentlySelected = null;
 
         this.entities = [
             //new line(0, 0, 100, 100, 0, null, 1),
@@ -38,24 +37,38 @@ class Screen {
             //new triangle(0, 0, 100, 100, 100, 0, 5, true),
             new text(0, 100, "test", "32px Ariel")
         ];
+
+        this.editComponent(this.entities[0]);
     }
 
     editComponent(component) {
         this.currentlySelected = component;
 
-        if (component.type == "widget")
-            return;
+        if (component.type == "widget") {
+            let widget = component;
 
-        let editable = component.editable;
+            settingsDict["clear"]();
+            settingsDict["heading"]("Editing widget");
+            settingsDict["textArea"]("Variables Edit", {
+                type: "textArea",
+                default: JSON.stringify(widget.variables, undefined, 4),
+                optional: false
+            });
 
-        settingsDict["clear"]();
-        settingsDict["heading"]("Editing " + component.type);
+            settingsDict["makeButton"]();
+            this.entities.push(widget);
+        } else {
+            let editable = component.editable;
 
-        for (const [key, value] of Object.entries(editable)) {
-            settingsDict[value.type](key, value);
+            settingsDict["clear"]();
+            settingsDict["heading"]("Editing " + component.type);
+
+            for (const [key, value] of Object.entries(editable)) {
+                settingsDict[value.type](key, value);
+            }
+
+            settingsDict["makeButton"]();
         }
-
-        settingsDict["makeButton"]();
     }
 
     selectComponent(component) {
@@ -77,7 +90,7 @@ class Screen {
     }
 
 
-    selectWidget(widgetName) {
+    addWidget(widgetName) {
         if (!widgets.find(el => el.name == widgetName))
             return;
 
@@ -199,7 +212,7 @@ class Screen {
 
         if (this.currentlySelected != this.mouseOnComponent) {
             this.editComponent({
-                type: this.currentlySelected.type,
+                type: this.mouseOnComponent.type,
                 ...this.mouseOnComponent
             });
         }
@@ -270,7 +283,7 @@ class Screen {
                     p.push({
                         d: e.variables[m].distSqr(this.mouse.x, this.mouse.y),
                         e: e.variables[m],
-                        g: e.variables
+                        g: e,
                     });
                 }
             }
@@ -286,7 +299,7 @@ class Screen {
             this.mouseOnEntity = p[0].e;
             this.mouseOnComponent = p[0].g;
 
-            if (this.currentlySelected.type == "widget")
+            if (this.mouseOnComponent && this.mouseOnComponent.type == "widget")
                 this.ui.drawPicker(p[0].e.default.x, p[0].e.default.y);
             else
                 this.ui.drawPicker(p[0].e.x, p[0].e.y);
