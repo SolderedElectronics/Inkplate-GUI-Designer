@@ -5,6 +5,8 @@ var ctx = canvas.getContext("2d");
 
 let screen = new Screen(ctx, canvas);
 
+let fileTab = new FileTab();
+
 for (let w of widgets) {
     let el = document.createElement("BUTTON");
     el.classList = "list-group-item list-group-item-action primitiveItem".split();

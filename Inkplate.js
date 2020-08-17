@@ -18,6 +18,8 @@ class Inkplate {
             y: 0
         };
 
+        this.color = 0;
+
         this.font = "15px Arial";
     }
 
@@ -229,6 +231,10 @@ class Inkplate {
         this.ctx.fill();
     }
 
+    setFontColor(c) {
+        this.color = c;
+    }
+
     setFont(font) {
         this.font = font;
     }
@@ -239,7 +245,7 @@ class Inkplate {
     }
 
     print(text) {
-        this.ctx.fillStyle = "black";
+        this.ctx.fillStyle = `rgb(${this.color << 5}, ${this.color << 5}, ${this.color << 5})`;
         this.ctx.font = this.font;
 
         let maxWidth = 800 - this.cursor.x + this.outline;

@@ -169,11 +169,17 @@ function inputChanged(el) {
     } else if (name.indexOf("_y_input") != -1) {
         screen.currentlySelected[name.substring(0, name.indexOf("_y_input"))].y = parseInt(el.value);
     } else if (el.type == "checkbox") {
-        screen.currentlySelected[name.substring(0, name.indexOf("_input"))] = el.checked;
+        screen.entities.find(
+            el => el.type == screen.currentlySelected.type &&
+            el.id == screen.currentlySelected.id
+        )[name.substring(0, name.indexOf("_input"))] = el.checked;
     } else if (name.indexOf("_text_input") != -1) {
         screen.currentlySelected[name.substring(0, name.indexOf("_text_input"))] = el.value;
     } else {
-        screen.currentlySelected[name.substring(0, name.indexOf("_input"))] = parseFloat(el.value);
+        screen.entities.find(
+            el => el.type == screen.currentlySelected.type &&
+            el.id == screen.currentlySelected.id
+        )[name.substring(0, name.indexOf("_input"))] = parseFloat(el.value);
     }
 }
 
@@ -206,8 +212,18 @@ function updateValues() {
 }
 
 function addEntity() {
+    let cmp = (a, b) => {
+        for (const [key, value] of Object.entries(a)) {
+            if (key == "type")
+                continue;
+            if (a[key] != b[key])
+                return false;
+        }
+        return true;
+    };
+
     if (document.getElementsByClassName("settings")[0].querySelector("#content").innerHTML.startsWith("Editing")) {
-        screen.entities = screen.entities.filter(el => !(el == screen.currentlySelected));
+        screen.entities = screen.entities.filter(el => !cmp(el, screen.currentlySelected));
         screen.currentlySelected = null;
         clear();
         return;

@@ -1,6 +1,7 @@
 let graph = {
     name: "graph",
     type: "widget",
+    id: 0,
     variables: {
         "a": {
             type: "int[]",
@@ -55,10 +56,17 @@ let graph = {
             display.drawLine(variables["corner"].x + 100 + i * 20, variables["corner"].y + 100, variables["corner"].x + 100 + i * 20, variables["corner"].y + 100 + variables["a"][i] * 4, 0);
         }
     },
-    cCode: `
-        for(int i = 0; i < 10; ++i)
-            display.drawLine(100 + i * 20, 100, 100 + i * 20, 100 + a[i] * 4, 0);
-    `,
+    getCCodeVariables: function () {
+        return `int widget${this.id}_a[] = ${JSON.stringify(this.variables.a.value || this.variables.a.default).replaceAll("[", "{").replaceAll("]", "}")};\n` +
+            `int widget${this.id}_t1 = ${parseInt(this.variables.t1.value||this.variables.t1.default)};\n` +
+            `String widget${this.id}_h = "${this.variables.h.value||this.variables.h.default}";\n` +
+            `int widget${this.id}_corner_x = ${parseInt(this.variables.corner.default.x||this.variables.corner.value.x)};\n` +
+            `int widget${this.id}_corner_y = ${parseInt(this.variables.corner.default.y||this.variables.corner.value.y)};\n\n`;
+    },
+    getCCodeDraw: function () {
+        return `    for(int i = 0; i < 10; ++i)\n` +
+            `       display.drawLine(widget${this.id}_corner_x + 100 + i * 20, widget${this.id}_corner_y + 100, widget${this.id}_corner_x + 100 + i * 20, widget${this.id}_corner_y + 100 + widget${this.id}_a[i] * 4, 0);\n\n`;
+    },
     modifiers: ["corner"],
     editable: {
         "h": {
@@ -73,3 +81,5 @@ let graph = {
 let widgets = [
     graph
 ]
+
+let widgetsIdCount = 0;

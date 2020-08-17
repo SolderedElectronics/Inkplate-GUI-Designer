@@ -27,8 +27,20 @@
             File
           </button>
           <div class="dropdown-menu" aria-labelledby="file">
-            <button class="dropdown-item" type="button">Action</button>
-            <button class="dropdown-item" type="button">Another action</button>
+            <button
+              class="dropdown-item"
+              type="button"
+              onclick="fileTab.exportC()"
+            >
+              Export C Code (Widgets supported)
+            </button>
+            <button
+              class="dropdown-item"
+              type="button"
+              onclick="fileTab.exportJSON()"
+            >
+              Export Entity JSON (Primitives only)
+            </button>
             <button class="dropdown-item" type="button">
               Something else here
             </button>
@@ -282,12 +294,14 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
     <script src="settingsTab.js"></script>
     <script src="primitives.js"></script>
     <script src="widgets.js"></script>
     <script src="Inkplate.js"></script>
     <script src="UI.js"></script>
     <script src="Screen.js"></script>
+    <script src="FileTab.js"></script>
     <script src="main.js"></script>
   </body>
 </html>

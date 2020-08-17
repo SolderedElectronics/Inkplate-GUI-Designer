@@ -35,7 +35,7 @@ class Screen {
             //new rect(0, 0, 100, 100, 0, false, 0, false),
             //new circle(100, 100, 50, 4, true),
             //new triangle(0, 0, 100, 100, 100, 0, 5, true),
-            new text(0, 100, "test", "32px Ariel")
+            new text(0, 100, "test", "32px Ariel", 0)
         ];
 
         this.editComponent(this.entities[0]);
@@ -48,7 +48,7 @@ class Screen {
             let widget = component;
 
             settingsDict["clear"]();
-            settingsDict["heading"]("Editing widget");
+            settingsDict["heading"]("Editing widget" + widget.id);
             settingsDict["textArea"]("Variables Edit", {
                 type: "textArea",
                 default: JSON.stringify(widget.variables, undefined, 4),
@@ -56,12 +56,12 @@ class Screen {
             });
 
             settingsDict["makeButton"]();
-            this.entities.push(widget);
+            //this.entities.push(widget);
         } else {
             let editable = component.editable;
 
             settingsDict["clear"]();
-            settingsDict["heading"]("Editing " + component.type);
+            settingsDict["heading"]("Editing " + component.type + component.id);
 
             for (const [key, value] of Object.entries(editable)) {
                 settingsDict[value.type](key, value);
@@ -99,7 +99,7 @@ class Screen {
         this.currentlySelected = widget;
 
         settingsDict["clear"]();
-        settingsDict["heading"]("Editing widget");
+        settingsDict["heading"]("Editing widget" + widget.id);
         settingsDict["textArea"]("Variables Edit", {
             type: "textArea",
             default: JSON.stringify(widget.variables, undefined, 4),
@@ -107,7 +107,11 @@ class Screen {
         });
 
         settingsDict["makeButton"]();
-        this.entities.push(widget);
+        this.entities.push({
+            ..._.cloneDeep(widget)
+        });
+
+        this.entities[this.entities.length - 1].id = widgetsIdCount++;
     }
 
     addComponent(settings) {
@@ -156,9 +160,12 @@ class Screen {
                 settings["cursor"].x,
                 settings["cursor"].y,
                 settings["content"],
-                settings["font"]
+                settings["font"],
+                settings["color"],
             ));
         }
+
+        this.entities[this.entities.length - 1].id = primitiveIdCount[settings.type]++;
 
         return this.entities[this.entities.length - 1];
     }
@@ -259,6 +266,7 @@ class Screen {
                     this.display.drawRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["color"]);
             } else if (e.type == "text") {
                 this.display.setFont(e["font"]);
+                this.display.setFontColor(e["color"]);
                 this.display.setCursor(e["cursor"].x, e["cursor"].y);
                 this.display.print(e["content"]);
             } else if (e.type == "widget") {
