@@ -16,6 +16,14 @@
         <div class="dropdown" style="margin-left: 10px; margin-right: 10px;">
           <b>GUI &nbsp; </b>
           <button
+            class="btn btn-primary"
+            type="button"
+            onclick="fileTab.exportC()"
+            style="padding-bottom: 1px; padding-top: 1px;"
+          >
+            Export C Code
+          </button>
+          <button
             class="btn btn-secondary btn-sm dropdown-toggle"
             type="button"
             id="file"
@@ -27,39 +35,6 @@
             File
           </button>
           <div class="dropdown-menu" aria-labelledby="file">
-            <button
-              class="dropdown-item"
-              type="button"
-              onclick="fileTab.exportC()"
-            >
-              Export C Code (Widgets supported)
-            </button>
-            <button
-              class="dropdown-item"
-              type="button"
-              onclick="fileTab.exportJSON()"
-            >
-              Export Entity JSON (Primitives only)
-            </button>
-            <button class="dropdown-item" type="button">
-              Something else here
-            </button>
-          </div>
-
-          <button
-            class="btn btn-secondary btn-sm dropdown-toggle"
-            type="button"
-            id="edit"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            style="padding-bottom: 1px; padding-top: 1px;"
-          >
-            Edit
-          </button>
-          <div class="dropdown-menu" aria-labelledby="edit">
-            <button class="dropdown-item" type="button">Action</button>
-            <button class="dropdown-item" type="button">Another action</button>
             <button class="dropdown-item" type="button">
               Something else here
             </button>

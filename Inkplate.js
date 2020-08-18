@@ -84,6 +84,34 @@ class Inkplate {
         ctx.stroke();
     }
 
+    drawFastVLine(x, y, h, c) {
+        let _x0 = this.scaleX(x);
+        let _y0 = this.scaleY(y);
+        let _x1 = this.scaleX(x);
+        let _y1 = this.scaleY(y + h);
+
+        ctx.beginPath();
+        ctx.moveTo(_x0, _y0);
+        ctx.lineTo(_x1, _y1);
+
+        this.ctx.strokeStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
+        ctx.stroke();
+    }
+
+    drawFastHLine(x, y, w, c) {
+        let _x0 = this.scaleX(x);
+        let _y0 = this.scaleY(y);
+        let _x1 = this.scaleX(x + w);
+        let _y1 = this.scaleY(y);
+
+        ctx.beginPath();
+        ctx.moveTo(_x0, _y0);
+        ctx.lineTo(_x1, _y1);
+
+        this.ctx.strokeStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
+        ctx.stroke();
+    }
+
     drawThickLine(x0, y0, x1, y1, c, t) {
         let _x0 = this.scaleX(x0);
         let _y0 = this.scaleY(y0);
@@ -103,25 +131,27 @@ class Inkplate {
     }
 
     drawGradientLine(x0, y0, x1, y1, c0, c1, t) {
-        let _x0 = this.scaleX(x0);
-        let _y0 = this.scaleY(y0);
-        let _x1 = this.scaleX(x1);
-        let _y1 = this.scaleY(y1);
+        let _x0 = (x0);
+        let _y0 = (y0);
+        let _x1 = (x1);
+        let _y1 = (y1);
 
-        this.ctx.lineWidth = t;
+        let n = c1 - c0;
 
-        let grad = ctx.createLinearGradient(_x0, _y0, _x1, _y1);
-        grad.addColorStop(0, "rgba(" + (c0 << 5) + "," + (c0 << 5) + "," + (c0 << 5) + "," + 1 + ")");
-        grad.addColorStop(1, "rgba(" + (c1 << 5) + "," + (c1 << 5) + "," + (c1 << 5) + "," + 1 + ")");
+        let px = (_x1 - _x0) / n;
+        let py = (_y1 - _y0) / n;
 
-        ctx.beginPath();
-        ctx.moveTo(_x0, _y0);
-        ctx.lineTo(_x1, _y1);
-
-        ctx.strokeStyle = grad;
-        ctx.stroke();
-
-        this.ctx.lineWidth = 1;
+        for (let i = 0; i < n; ++i) {
+            if (t && abs(t + 1) < 0.1)
+                this.drawLine((_x0 + i * px), (_y0 + i * py),
+                    (_x0 + (i + 1) * px), (_y0 + (i + 1) * py),
+                    c0 + i);
+            else
+                this.drawThickLine((_x0 + i * px), (_y0 + i * py),
+                    (_x0 + (i + 1) * px), (_y0 + (i + 1) * py),
+                    c0 + i,
+                    t);
+        }
     }
 
     drawCircle(x, y, r, c) {

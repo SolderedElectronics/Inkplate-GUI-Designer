@@ -184,11 +184,26 @@ function inputChanged(el) {
 }
 
 function widgetChanged(el) {
-    screen.currentlySelected.variables = JSON.parse(el.value);
-}
+    screen.entities.find(
+        el => el.type == screen.currentlySelected.type &&
+        el.id == screen.currentlySelected.id
+    ).variables = JSON.parse(el.value);
 
-function textAreaChange() {
-    // tu tu tu promjene todo
+    for (let l of screen.currentlySelected.modifiers) {
+        let el = screen.entities.find(
+            el => el.type == screen.currentlySelected.type &&
+            el.id == screen.currentlySelected.id
+        ).variables[l];
+
+        el.set = function (_x, _y) {
+            el.default.x = _x;
+            el.default.y = _y;
+        };
+
+        el.distSqr = function (_x, _y) {
+            return (el.default.x - _x) ** 2 + (el.default.y - _y) ** 2;
+        };
+    }
 }
 
 function updateValues() {
