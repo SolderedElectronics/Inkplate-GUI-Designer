@@ -35,7 +35,7 @@ class Screen {
             //new rect(0, 0, 100, 100, 0, false, 0, false),
             //new circle(100, 100, 50, 4, true),
             //new triangle(0, 0, 100, 100, 100, 0, 5, true),
-            new text(300, 290, "Hello there!", "32px Ariel", 0)
+            new text(300, 290, "Hello there!", "24px FreeSansBold24pt7b", 0)
         ];
 
         this.editComponent(this.entities[0]);

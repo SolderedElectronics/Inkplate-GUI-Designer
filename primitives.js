@@ -417,7 +417,7 @@ class text {
             },
             "font": {
                 type: "text",
-                default: "24px Arial",
+                default: "24px FreeSansBold24pt7b",
                 optional: false
             },
             "color": {
@@ -430,16 +430,21 @@ class text {
         };
     }
 
+    getIncludes() {
+        return `#include "Fonts/${this.font.substring(this.font.indexOf("px")+3)}.h"\n`;
+    }
+
     getCCodeVariables() {
         return `String text${this.id}_content = "${this.content}";\n` +
             `int text${this.id}_cursor_x = ${parseInt(this.cursor.x)};\n` +
             `int text${this.id}_cursor_y = ${parseInt(this.cursor.y)};\n` +
-            `const GFXfont *text${this.id}_font = &${this.font.split(" ").reverse().join("_")};\n\n`;
+            `const GFXfont *text${this.id}_font = &${this.font.substring(this.font.indexOf("px")+3)};\n\n`;
     }
 
     getCCodeDraw() {
         return `    display.setFont(text${this.id}_font);\n` +
             `    display.setTextColor(${this.color}, 7);` +
+            `    display.setTextSize(1);` +
             `    display.setCursor(text${this.id}_cursor_x, text${this.id}_cursor_y);\n` +
             `    display.print(text${this.id}_content);\n` +
             `\n`;

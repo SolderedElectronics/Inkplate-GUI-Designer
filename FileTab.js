@@ -7,6 +7,19 @@ class FileTab {
         let s = `#include "Arduino.h"\n`;
         s += `#include "Inkplate.h"\n`;
 
+        let alreadyIncluded = [];
+        for (let el of screen.entities) {
+            if (el.getIncludes) {
+                let t = el.getIncludes();
+
+                if (alreadyIncluded.indexOf(t) != -1)
+                    continue;
+
+                alreadyIncluded.push(t);
+                s += t;
+            }
+        }
+
         s += `\n`;
         s += `extern Inkplate display;\n`;
         s += `\n`;

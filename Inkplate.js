@@ -20,7 +20,7 @@ class Inkplate {
 
         this.color = 0;
 
-        this.font = "15px Arial";
+        this.font = "24px Arial";
     }
 
     scaleX(x) {
@@ -142,7 +142,7 @@ class Inkplate {
         let py = (_y1 - _y0) / n;
 
         for (let i = 0; i < n; ++i) {
-            if (t && abs(t + 1) < 0.1)
+            if (t && Math.abs(t + 1) < 0.1)
                 this.drawLine((_x0 + i * px), (_y0 + i * py),
                     (_x0 + (i + 1) * px), (_y0 + (i + 1) * py),
                     c0 + i);
@@ -276,7 +276,7 @@ class Inkplate {
 
     print(text) {
         this.ctx.fillStyle = `rgb(${this.color << 5}, ${this.color << 5}, ${this.color << 5})`;
-        this.ctx.font = this.font;
+        this.ctx.font = parseInt(this.font) + "px Arial";
 
         let maxWidth = 800 - this.cursor.x + this.outline;
 

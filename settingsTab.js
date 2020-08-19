@@ -165,16 +165,25 @@ function inputChanged(el) {
     if (type == "widget")
         return;
     if (name.indexOf("_x_input") != -1) {
-        screen.currentlySelected[name.substring(0, name.indexOf("_x_input"))].x = parseInt(el.value);
+        screen.entities.find(
+            el => el.type == screen.currentlySelected.type &&
+            el.id == screen.currentlySelected.id
+        )[name.substring(0, name.indexOf("_x_input"))].x = parseInt(el.value);
     } else if (name.indexOf("_y_input") != -1) {
-        screen.currentlySelected[name.substring(0, name.indexOf("_y_input"))].y = parseInt(el.value);
+        screen.entities.find(
+            el => el.type == screen.currentlySelected.type &&
+            el.id == screen.currentlySelected.id
+        )[name.substring(0, name.indexOf("_y_input"))].y = parseInt(el.value);
     } else if (el.type == "checkbox") {
         screen.entities.find(
             el => el.type == screen.currentlySelected.type &&
             el.id == screen.currentlySelected.id
         )[name.substring(0, name.indexOf("_input"))] = el.checked;
     } else if (name.indexOf("_text_input") != -1) {
-        screen.currentlySelected[name.substring(0, name.indexOf("_text_input"))] = el.value;
+        screen.entities.find(
+            el => el.type == screen.currentlySelected.type &&
+            el.id == screen.currentlySelected.id
+        )[name.substring(0, name.indexOf("_text_input"))] = el.value;
     } else {
         screen.entities.find(
             el => el.type == screen.currentlySelected.type &&
