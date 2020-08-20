@@ -130,6 +130,21 @@ function textAreaTemplate(name, settings) {
     document.getElementsByClassName("settings")[0].appendChild(clone);
 }
 
+function fileTemplate(name, settings) {
+    let clone = document.getElementById("fileTemplate").content.cloneNode(true);
+
+    if (settings.optional) {
+        clone.querySelector(".mainInput").disabled = true;
+    } else {
+        clone.querySelector(".mainCheckbox").style.display = "none";
+    }
+
+    clone.querySelector(".mainInput").id = name + "_input";
+
+    document.getElementsByClassName("settings")[0].innerHTML += "<br>";
+    document.getElementsByClassName("settings")[0].appendChild(clone);
+}
+
 function makeButton() {
     let clone = document.getElementById("buttonTemplate").content.cloneNode(true);
 
@@ -140,6 +155,8 @@ function makeButton() {
     document.getElementsByClassName("settings")[0].appendChild(clone);
 }
 
+
+
 let settingsDict = {
     "clear": clear,
     "heading": headingTemplate,
@@ -149,7 +166,8 @@ let settingsDict = {
     "coordinate": coordinateTemplate,
     "text": textTemplate,
     "makeButton": makeButton,
-    "textArea": textAreaTemplate
+    "textArea": textAreaTemplate,
+    "file": fileTemplate
 }
 
 function changeCheckbox(el) {
@@ -158,6 +176,8 @@ function changeCheckbox(el) {
 }
 
 function inputChanged(el) {
+    if (!document.getElementsByClassName("settings")[0].querySelector("#content").innerHTML.startsWith("Editing") && el.type == "file")
+        addEntity();
     if (!document.getElementsByClassName("settings")[0].querySelector("#content").innerHTML.startsWith("Editing")) return;
 
     let name = el.id;
@@ -184,6 +204,14 @@ function inputChanged(el) {
             el => el.type == screen.currentlySelected.type &&
             el.id == screen.currentlySelected.id
         )[name.substring(0, name.indexOf("_text_input"))] = el.value;
+    } else if (el.type == "file") {
+        let en = screen.entities.find(
+            el => el.type == screen.currentlySelected.type &&
+            el.id == screen.currentlySelected.id
+        );
+        en[name.substring(0, name.indexOf("_input"))] = URL.createObjectURL(el.files[0]);
+        en["file"] = new Image();
+        en["file"].src = en[name.substring(0, name.indexOf("_input"))];
     } else {
         screen.entities.find(
             el => el.type == screen.currentlySelected.type &&
@@ -288,6 +316,14 @@ function addEntity() {
                 settings[key] = null;
             else
                 settings[key] = document.getElementById(key + "_text_input").value
+        } else if (value.type == "file") {
+            if (document.getElementById(key + "_input").files[0]) {
+                settings[key] = URL.createObjectURL(document.getElementById(key + "_input").files[0]);
+                settings["file"] = new Image();
+                settings["file"].src = settings[key];
+            } else {
+                settings[key] = null;
+            }
         }
     }
 

@@ -451,12 +451,170 @@ class text {
     }
 }
 
+class bitmap {
+    constructor(x0, y0, x1, y1, url) {
+        this.type = "bitmap";
+
+        this.id = 0;
+
+        this["a"] = {
+            x: x0,
+            y: y0,
+            set: function (_x, _y) {
+                this.x = _x;
+                this.y = _y;
+            },
+            distSqr: function (_x, _y) {
+                return (this.x - _x) ** 2 + (this.y - _y) ** 2;
+            },
+        }
+
+        this["b"] = {
+            x: x1,
+            y: y1,
+            set: function (_x, _y) {
+                this.x = _x;
+                this.y = _y;
+            },
+            distSqr: function (_x, _y) {
+                return (this.x - _x) ** 2 + (this.y - _y) ** 2;
+            },
+        }
+
+        this["url"] = url;
+
+        this.file = null;
+
+        this.modifiers = [
+            "a",
+            "b"
+        ];
+
+        this.z = 0;
+
+        this.editable = {
+            "a": {
+                type: "coordinate",
+                default: {
+                    x: 100,
+                    y: 100
+                },
+                optional: false
+            },
+            "b": {
+                type: "coordinate",
+                default: {
+                    x: 600,
+                    y: 600
+                },
+                optional: false
+            },
+            "url": {
+                type: "file",
+                default: "",
+                optional: false
+            },
+        }
+    }
+
+    getCCodeVariables() {
+        if (!this.file)
+            return "";
+
+        let img = this.file;
+        let canvas = document.createElement("canvas");
+
+        canvas.width = this["b"].x - this["a"].x;
+        canvas.height = this["b"].y - this["a"].y;
+
+        let ctx = canvas.getContext("2d");
+
+        ctx.drawImage(
+            img,
+            0, 0,
+            img.width, img.height,
+            0, 0,
+            canvas.width, canvas.height
+        );
+
+        let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+        for (let i = 1; i < canvas.height - 1; ++i)
+            for (let j = 1; j < canvas.width - 1; ++j)
+                imgData.data[4 * (j + i * canvas.width)] = parseInt(
+                    (0.3 * imgData.data[4 * (j + i * canvas.width)]) +
+                    (0.59 * imgData.data[4 * (j + i * canvas.width) + 1]) +
+                    (0.11 * imgData.data[4 * (j + i * canvas.width) + 2]));
+
+
+        let depth = 3;
+
+        for (let i = 1; i < canvas.height - 1; ++i) {
+            for (let j = 1; j < canvas.width - 1; ++j) {
+                let oldpixel = imgData.data[4 * (j + i * canvas.width)];
+
+                let newpixel = oldpixel & (depth == 3 ? 0xE0 : 0x80);
+
+                imgData.data[4 * (j + i * canvas.width)] = newpixel;
+
+                let quant_error = oldpixel - newpixel;
+
+                imgData.data[4 * ((j + 1) + (i + 0) * canvas.width)] += Math.floor(quant_error * 7 / 16);
+                imgData.data[4 * ((j - 1) + (i + 1) * canvas.width)] += Math.floor(quant_error * 3 / 16);
+                imgData.data[4 * ((j + 0) + (i + 1) * canvas.width)] += Math.floor(quant_error * 5 / 16);
+                imgData.data[4 * ((j + 1) + (i + 1) * canvas.width)] += Math.floor(quant_error * 1 / 16);
+            }
+        }
+
+
+        let s = `` +
+            `int bitmap${this.id}_x = ${this["a"].x};\n` +
+            `int bitmap${this.id}_y = ${this["a"].y};\n` +
+            `const int bitmap${this.id}_w = ${this["b"].x - this["a"].x};\n` +
+            `const int bitmap${this.id}_h = ${this["b"].y - this["a"].y};\n` +
+            `const uint8_t bitmap${this.id}_content[] PROGMEM = {\n`;
+
+        let last = 0;
+
+        for (let i = 0; i < canvas.height; ++i) {
+            for (let j = 0; j < canvas.width; ++j) {
+                let val = parseInt(imgData.data[4 * (j + canvas.width * i) + 0]);
+
+                if (j % 2 == 0)
+                    last = val & 0xF0;
+                else {
+                    last |= (val >> 4) & 0x0F;
+
+                    s += `0x${last.toString(16)},`;
+                    last = 0;
+                }
+            }
+            if (canvas.height % 2 != 0) {
+                s += `0x${last.toString(16)},`;
+                last = 0;
+            }
+            s += "\n";
+        }
+        s += `};\n`;
+
+        return s;
+    }
+
+    getCCodeDraw() {
+        if (!this.file)
+            return "";
+
+        return `    display.drawBitmap3Bit(bitmap${this.id}_x, bitmap${this.id}_y, bitmap${this.id}_content, bitmap${this.id}_w, bitmap${this.id}_h);\n`;
+    }
+}
+
 let primitiveDict = {
     "line": line,
     "circle": circle,
     "rect": rect,
     "triangle": triangle,
     "text": text,
+    "bitmap": bitmap
 };
 
 let primitiveIdCount = {
@@ -465,4 +623,5 @@ let primitiveIdCount = {
     "rect": 0,
     "triangle": 0,
     "text": 1,
+    "bitmap": 0
 };

@@ -20,7 +20,7 @@ class Inkplate {
 
         this.color = 0;
 
-        this.font = "24px Arial";
+        this.font = "24px FreeSansBold24pt7b";
     }
 
     scaleX(x) {
@@ -261,6 +261,16 @@ class Inkplate {
         this.ctx.fill();
     }
 
+    drawBitmap3Bit(x, y, img, w, h) {
+        this.ctx.drawImage(
+            img,
+            0, 0,
+            img.width, img.height,
+            this.scaleX(x), this.scaleY(y),
+            w, h
+        );
+    }
+
     setFontColor(c) {
         this.color = c;
     }
@@ -276,7 +286,7 @@ class Inkplate {
 
     print(text) {
         this.ctx.fillStyle = `rgb(${this.color << 5}, ${this.color << 5}, ${this.color << 5})`;
-        this.ctx.font = parseInt(this.font) + "px Arial";
+        this.ctx.font = parseInt(this.font) + "px FreeSansBold24pt7b";
 
         let maxWidth = 800 - this.cursor.x + this.outline;
 

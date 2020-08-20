@@ -163,6 +163,14 @@ class Screen {
                 settings["font"],
                 settings["color"],
             ));
+        } else if (settings.type == "bitmap") {
+            this.entities.push(new primitiveDict["bitmap"](
+                settings["a"].x,
+                settings["a"].y,
+                settings["b"].x,
+                settings["b"].y,
+                settings["url"],
+            ));
         }
 
         this.entities[this.entities.length - 1].id = primitiveIdCount[settings.type]++;
@@ -271,6 +279,10 @@ class Screen {
                 this.display.print(e["content"]);
             } else if (e.type == "widget") {
                 e.draw(this.display);
+            } else if (e.type == "bitmap") {
+                if (e.file && e.file.complete) {
+                    this.display.drawBitmap3Bit(e["a"].x, e["a"].y, e.file, e["b"].x - e["a"].x, e["b"].y - e["a"].y);
+                };
             }
         }
     }

@@ -88,6 +88,13 @@
                 Text
               </button>
 
+              <button
+                class="list-group-item list-group-item-action primitiveItem"
+                onclick="selectComponent('bitmap')"
+              >
+                Bitmap
+              </button>
+
               <hr />
               <h4 class="primitiveItem active list-group-item">
                 Widgets
@@ -208,6 +215,31 @@
         </div>
         <input
           type="text"
+          class="form-control inputElement mainInput"
+          aria-label="Small"
+          aria-describedby="inputGroup-sizing-sm"
+          onchange="inputChanged(this)"
+        />
+      </div>
+    </template>
+
+    <template id="fileTemplate">
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text inputText" id="inputGroup-sizing-sm">
+            <input
+              type="checkbox"
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              class="mainCheckbox"
+              onclick="changeCheckbox(this)"
+            />
+            &nbsp;
+            <span class="name"></span>
+          </span>
+        </div>
+        <input
+          type="file"
           class="form-control inputElement mainInput"
           aria-label="Small"
           aria-describedby="inputGroup-sizing-sm"
