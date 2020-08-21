@@ -24,6 +24,8 @@ class Screen {
             down: false
         }
 
+        this.UIlines = [];
+
         this.canvas.addEventListener("mousemove", this.mouseMove.bind(this));
         this.canvas.addEventListener("mousedown", this.mouseDown.bind(this));
         this.canvas.addEventListener("mouseup", this.mouseUp.bind(this));
@@ -179,12 +181,41 @@ class Screen {
     }
 
     mouseMove(e) {
+        this.UIlines = [];
         let rect = this.canvas.getBoundingClientRect();
 
         let x = 1 / this.scale * (e.clientX - rect.left) - this.outline - this.xOffset;
         let y = 1 / this.scale * (e.clientY - rect.top) - this.outline - this.yOffset;
 
-        if (0 <= x && x < 800 && 0 <= y && y < 600) {
+
+
+        if (-7 <= x && x < 807 && -7 <= y && y < 607) {
+            x = Math.min(Math.max(x, 0), 800);
+            y = Math.min(Math.max(y, 0), 600);
+
+            let n = 3;
+
+            for (let i = 0; i < (1 << n) + 1; ++i) {
+                let xm = i / (1 << n) * 800;
+                let ym = i / (1 << n) * 600;
+
+                if (document.getElementById("magnet").checked && xm - 7 <= x && x < xm + 7) {
+                    x = xm;
+                    this.UIlines.push({
+                        a: "vertical",
+                        c: x,
+                        p: Math.abs((1 << (n - 1)) - i)
+                    });
+                }
+                if (document.getElementById("magnet").checked && ym - 7 <= y && y < ym + 7) {
+                    y = ym;
+                    this.UIlines.push({
+                        a: "horizontal",
+                        c: y,
+                        p: Math.abs((1 << (n - 1)) - i)
+                    });
+                }
+            }
             this.mouse.x = x;
             this.mouse.y = y;
         }
@@ -332,5 +363,13 @@ class Screen {
         this.drawEntities();
         this.drawMouse();
         this.drawOutline();
+
+        for (let l of this.UIlines) {
+            if (l.a == "vertical") {
+                this.ui.drawAligmentLinesVertical(l.c, l.p);
+            } else if (l.a == "horizontal") {
+                this.ui.drawAligmentLinesHorizontal(l.c, l.p);
+            }
+        }
     }
 }
