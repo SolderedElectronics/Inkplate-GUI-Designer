@@ -50,7 +50,7 @@ class Screen {
             let widget = component;
 
             settingsDict["clear"]();
-            settingsDict["heading"]("Editing widget" + widget.id);
+            settingsDict["heading"]("Editing <i>widget" + widget.id + "</i>");
             settingsDict["textArea"]("Variables Edit", {
                 type: "textArea",
                 default: JSON.stringify(widget.variables, undefined, 4),
@@ -63,7 +63,7 @@ class Screen {
             let editable = component.editable;
 
             settingsDict["clear"]();
-            settingsDict["heading"]("Editing " + component.type + component.id);
+            settingsDict["heading"]("Editing <i>" + component.type + component.id + "</i>");
 
             for (const [key, value] of Object.entries(editable)) {
                 settingsDict[value.type](key, value);
@@ -100,8 +100,14 @@ class Screen {
 
         this.currentlySelected = widget;
 
+        this.entities.push({
+            ..._.cloneDeep(widget)
+        });
+
+        this.entities[this.entities.length - 1].id = widgetsIdCount++;
+
         settingsDict["clear"]();
-        settingsDict["heading"]("Editing widget" + widget.id);
+        settingsDict["heading"]("Editing <i>widget" + (widgetsIdCount - 1) + "</i>");
         settingsDict["textArea"]("Variables Edit", {
             type: "textArea",
             default: JSON.stringify(widget.variables, undefined, 4),
@@ -109,17 +115,17 @@ class Screen {
         });
 
         settingsDict["makeButton"]();
-        this.entities.push({
-            ..._.cloneDeep(widget)
-        });
-
-        this.entities[this.entities.length - 1].id = widgetsIdCount++;
     }
 
     addComponent(settings) {
         this.currentlySelected = null;
 
-        if (settings.type == "line")
+        if (settings.type == "pixel") {
+            this.entities.push(new primitiveDict["pixel"](
+                settings["location"].x,
+                settings["location"].y,
+                settings["color"]));
+        } else if (settings.type == "line")
             this.entities.push(new primitiveDict["line"](
                 settings["start"].x,
                 settings["start"].y,
@@ -275,7 +281,9 @@ class Screen {
             return 0;
         });
         for (const e of this.entities) {
-            if (e.type == "line") {
+            if (e.type == "pixel") {
+                this.display.drawPixel(e["location"].x, e["location"].y, e["color"]);
+            } else if (e.type == "line") {
                 if (!e.gradient && e.thickness == 1)
                     this.display.drawLine(e["start"].x, e["start"].y, e["end"].x, e["end"].y, e["color"]);
                 else if (!e.gradient && e.thickness != 1)

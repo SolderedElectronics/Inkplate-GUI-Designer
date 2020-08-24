@@ -1,3 +1,49 @@
+class pixel {
+    constructor(x0, y0, c) {
+        this.type = "pixel";
+
+        this.id = 0;
+
+        this["location"] = {
+            x: x0,
+            y: y0,
+            set: function (_x, _y) {
+                this.x = _x;
+                this.y = _y;
+            },
+            distSqr: function (_x, _y) {
+                return (this.x - _x) ** 2 + (this.y - _y) ** 2;
+            }
+        }
+
+        this["color"] = c;
+
+        this.modifiers = [
+            "location",
+        ];
+
+        this.z = 0;
+
+        this.editable = {
+            "location": {
+                type: "coordinate",
+                default: {
+                    x: 10,
+                    y: 10
+                },
+                optional: false
+            },
+            "color": {
+                type: "int",
+                min: 0,
+                max: 7,
+                default: 0,
+                optional: false
+            }
+        };
+    }
+}
+
 class line {
     constructor(x0, y0, x1, y1, c0, c1, t) {
         this.type = "line";
@@ -609,15 +655,17 @@ class bitmap {
 }
 
 let primitiveDict = {
+    "pixel": pixel,
     "line": line,
     "circle": circle,
     "rect": rect,
     "triangle": triangle,
     "text": text,
-    "bitmap": bitmap
+    "bitmap": bitmap,
 };
 
 let primitiveIdCount = {
+    "pixel": 0,
     "line": 0,
     "circle": 0,
     "rect": 0,
