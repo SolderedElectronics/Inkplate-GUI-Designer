@@ -20,7 +20,8 @@ class Inkplate {
 
         this.color = 0;
 
-        this.font = "24px FreeSansBold24pt7b";
+        this.fontSize = "32px";
+        this.font = "FreeSansBold24pt7b";
     }
 
     scaleX(x) {
@@ -29,6 +30,10 @@ class Inkplate {
 
     scaleY(y) {
         return this.yOffset + this.outline + y;
+    }
+
+    setFontSize(s) {
+        this.fontSize = s;
     }
 
     drawOutline() {
@@ -286,7 +291,7 @@ class Inkplate {
 
     print(text) {
         this.ctx.fillStyle = `rgb(${this.color << 5}, ${this.color << 5}, ${this.color << 5})`;
-        this.ctx.font = parseInt(this.font) + "px FreeSansBold24pt7b";
+        this.ctx.font = this.fontSize + " Arial";
 
         let maxWidth = 800 - this.cursor.x + this.outline;
 
@@ -308,7 +313,7 @@ class Inkplate {
 
         for (let l of lines) {
             this.ctx.fillText(l, this.cursor.x, this.cursor.y);
-            this.cursor.y += parseFloat(this.font);
+            this.cursor.y += parseFloat(this.fontSize);
         }
     }
 

@@ -14,6 +14,12 @@ function boolTemplate(name, settings) {
 
     clone.querySelector(".name").innerHTML = name;
 
+    if (settings.name) {
+        clone.querySelector(".cname").innerHTML = "Name in C code: " + settings.name + "_" + name;
+    } else {
+        clone.querySelector(".cname").style.display = "none";
+    }
+
     clone.querySelector(".mainInput").id = name + "_input";
     clone.querySelector(".mainInput").min = settings.min;
     clone.querySelector(".mainInput").max = settings.max;
@@ -38,6 +44,12 @@ function intTemplate(name, settings) {
 
     clone.querySelector(".name").innerHTML = name;
 
+    if (settings.name) {
+        clone.querySelector(".cname").innerHTML = "Name in C code: " + settings.name + "_" + name;
+    } else {
+        clone.querySelector(".cname").style.display = "none";
+    }
+
     clone.querySelector(".mainInput").id = name + "_input";
     clone.querySelector(".mainInput").min = settings.min;
     clone.querySelector(".mainInput").max = settings.max;
@@ -61,6 +73,12 @@ function floatTemplate(name, settings) {
     let clone = document.getElementById("floatTemplate").content.cloneNode(true);
 
     clone.querySelector(".name").innerHTML = name;
+
+    if (settings.name) {
+        clone.querySelector(".cname").innerHTML = "Name in C code: " + settings.name + "_" + name;
+    } else {
+        clone.querySelector(".cname").style.display = "none";
+    }
 
     if (settings.optional) {
         clone.querySelector(".mainInput").disabled = true;
@@ -100,6 +118,12 @@ function textTemplate(name, settings) {
     let clone = document.getElementById("textTemplate").content.cloneNode(true);
 
     clone.querySelector(".name").innerHTML = name;
+
+    if (settings.name) {
+        clone.querySelector(".cname").innerHTML = "Name in C code: " + settings.name + "_" + name;
+    } else {
+        clone.querySelector(".cname").style.display = "none";
+    }
 
     if (settings.optional) {
         clone.querySelector(".mainInput").disabled = true;

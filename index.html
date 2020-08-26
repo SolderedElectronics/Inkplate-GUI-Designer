@@ -13,17 +13,17 @@
   <body>
     <div class="wrapper">
       <div class="header">
-        <div class="dropdown" style="margin-left: 10px; margin-right: 10px;">
+        <div class="dropdown" style="margin-left: 10px; margin-right: 10px">
           <b>GUI &nbsp; </b>
           <button
             class="btn btn-primary"
             type="button"
             onclick="fileTab.exportC()"
-            style="padding-bottom: 1px; padding-top: 1px; margin: 1px;"
+            style="padding-bottom: 1px; padding-top: 1px; margin: 1px"
           >
             Export C Code
           </button>
-
+          &nbsp;
           <input
             type="checkbox"
             aria-label="Small"
@@ -33,40 +33,65 @@
           <label
             for="magnet"
             class="btn btn-secondary"
-            style="padding-bottom: 1px; padding-top: 1px; margin: 1px;"
+            style="padding-bottom: 1px; padding-top: 1px; margin: 1px"
             >Magnet clipping</label
           >
-          <!--
-          <button
-            class="btn btn-secondary btn-sm dropdown-toggle"
-            type="button"
-            id="file"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-            style="padding-bottom: 1px; padding-top: 1px;"
+          &nbsp;
+          <label for="sel1">Inkplate version:</label>
+          <select
+            id="sel1"
+            style="
+              font-size: small;
+              padding-bottom: 1px;
+              padding-top: 1px;
+              margin: 1px;
+              width: 100px;
+              height: 100%;
+            "
           >
-            File
+            <option>Inkplate 6</option>
+            <option>Inkplate 10</option>
+            <option>Top secret</option>
+          </select>
+
+          <button
+            class="btn btn-primary float-right"
+            type="button"
+            onclick="fileTab.save()"
+            style="
+              padding-bottom: 1px;
+              padding-top: 1px;
+              margin: 1px;
+              margin-right: 100px;
+            "
+          >
+            Save
           </button>
-          <div class="dropdown-menu" aria-labelledby="file">
-            <button class="dropdown-item" type="button">
-              Something else here
-            </button>
-          </div>
-          -->
+
+          <button
+            class="btn btn-secondary float-right"
+            type="button"
+            onclick="fileTab.load()"
+            style="
+              padding-bottom: 1px;
+              padding-top: 1px;
+              margin: 1px;
+              margin-right: 5px;
+            "
+          >
+            Load
+          </button>
         </div>
       </div>
 
       <div class="content">
         <div class="components shadow bg-white rounded">
-          <div class="scrollWrap" style="margin: 0; width: 100%;">
+          <div class="scrollWrap" style="margin: 0; width: 100%">
             <div
               class="list-group"
-              style="font-size: 12px; padding: 0; margin: 0;"
+              style="font-size: 12px; padding: 0; margin: 0"
             >
-              <h4 class="primitiveItem active list-group-item">
-                Primitives
-              </h4>
+              <h4 class="primitiveItem active list-group-item">Primitives</h4>
 
               <button
                 class="list-group-item list-group-item-action primitiveItem"
@@ -118,9 +143,7 @@
               </button>
 
               <hr />
-              <h4 class="primitiveItem active list-group-item">
-                Widgets
-              </h4>
+              <h4 class="primitiveItem active list-group-item">Widgets</h4>
 
               <div id="widgets"></div>
 
@@ -131,9 +154,9 @@
         <div
           class="screen"
           id="screen"
-          style="width: 99.9%; height: 99.9%; overflow: hidden;"
+          style="width: 99.9%; height: 99.9%; overflow: hidden"
         >
-          <canvas style="width: 100%; height: 100%;" id="canvas"></canvas>
+          <canvas style="width: 100%; height: 100%" id="canvas"></canvas>
         </div>
         <div class="settings shadow bg-white rounded">a</div>
       </div>
@@ -168,10 +191,15 @@
           onchange="inputChanged(this)"
         />
       </div>
+      <div style="width: 100%; padding-bottom: 0px">
+        <p class="cname text-right" style="font-size: 10px; padding: 3px">
+          test
+        </p>
+      </div>
     </template>
 
     <template id="intTemplate">
-      <div class="input-group input-group-sm" style="margin-bottom: 2px;">
+      <div class="input-group input-group-sm">
         <div class="input-group-prepend">
           <span class="input-group-text inputText" id="inputGroup-sizing-sm">
             <input
@@ -193,10 +221,18 @@
           onchange="inputChanged(this)"
         />
       </div>
+      <div style="width: 100%">
+        <p
+          class="cname text-right"
+          style="font-size: 10px; margin-bottom: 2px; padding: 3px"
+        >
+          test
+        </p>
+      </div>
     </template>
 
     <template id="floatTemplate">
-      <div class="input-group input-group-sm" style="margin-bottom: 2px;">
+      <div class="input-group input-group-sm">
         <div class="input-group-prepend">
           <span class="input-group-text inputText" id="inputGroup-sizing-sm">
             <input
@@ -217,6 +253,14 @@
           aria-describedby="inputGroup-sizing-sm"
           onchange="inputChanged(this)"
         />
+      </div>
+      <div style="width: 100%">
+        <p
+          class="cname text-right"
+          style="font-size: 10px; margin-bottom: 2px; padding: 3px"
+        >
+          test
+        </p>
       </div>
     </template>
 
@@ -243,6 +287,11 @@
           onchange="inputChanged(this)"
         />
       </div>
+      <div style="width: 100%">
+        <p class="cname text-right" style="font-size: 10px; padding: 3px">
+          test
+        </p>
+      </div>
     </template>
 
     <template id="fileTemplate">
@@ -268,6 +317,11 @@
           onchange="inputChanged(this)"
         />
       </div>
+      <div style="width: 100%">
+        <p class="cname text-right" style="font-size: 10px; padding: 3px">
+          test
+        </p>
+      </div>
     </template>
 
     <template id="textAreaTemplate">
@@ -286,13 +340,18 @@
           </span>
         </div>
         <textarea
-          style="height: 400px;"
+          style="height: 400px"
           type="text"
           class="form-control inputElement mainInput"
           aria-label="Small"
           aria-describedby="inputGroup-sizing-sm"
           onchange="widgetChanged(this)"
         ></textarea>
+      </div>
+      <div style="width: 100%">
+        <p class="cname text-right" style="font-size: 10px; padding: 3px">
+          test
+        </p>
       </div>
     </template>
 

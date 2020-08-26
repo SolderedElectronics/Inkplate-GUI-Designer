@@ -1,5 +1,5 @@
 let graph = {
-    name: "graph",
+    name: "Graph",
     type: "widget",
     id: 0,
     variables: {

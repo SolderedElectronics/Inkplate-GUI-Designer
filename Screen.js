@@ -66,7 +66,10 @@ class Screen {
             settingsDict["heading"]("Editing <i>" + component.type + component.id + "</i>");
 
             for (const [key, value] of Object.entries(editable)) {
-                settingsDict[value.type](key, value);
+                settingsDict[value.type](key, {
+                    ...value,
+                    name: component.type + component.id.toString()
+                });
             }
 
             settingsDict["makeButton"]();
@@ -313,6 +316,7 @@ class Screen {
                     this.display.drawRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["color"]);
             } else if (e.type == "text") {
                 this.display.setFont(e["font"]);
+                this.display.setFontSize(e["size"]);
                 this.display.setFontColor(e["color"]);
                 this.display.setCursor(e["cursor"].x, e["cursor"].y);
                 this.display.print(e["content"]);

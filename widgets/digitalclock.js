@@ -1,5 +1,5 @@
 let digitalClock = {
-    name: "digital clock",
+    name: "Digital clock",
     type: "widget",
     id: 0,
     variables: {
