@@ -65,13 +65,15 @@ class FileTab {
             reader.onload = (function () {
                 let el = JSON.parse(reader.result);
 
-                widgetsIdCount += el.widgetCount;
-                let temp = {};
-                for (const [key, value] of Object.entries(el.primitiveCount))
-                    temp[key] = value + primitiveIdCount[key];
-                primitiveIdCount = temp;
-
-                // todo doo doo
+                for (let en of el.entities) {
+                    if (en.type == "widget") {
+                        screen.entities.push(_.merge(_.cloneDeep(widgets.find(el => el.name == en.name)), en));
+                        screen.entities[screen.entities.length - 1].id = widgetsIdCount++;
+                    } else {
+                        screen.entities.push(_.merge(new primitiveDict[en.type], en));
+                        screen.entities[screen.entities.length - 1].id = primitiveIdCount[en.type]++;
+                    }
+                }
             });
 
             reader.readAsText(f);
