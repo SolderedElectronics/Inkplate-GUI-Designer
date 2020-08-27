@@ -29,3 +29,14 @@ function loop() {
 function selectComponent(component) {
     screen.selectComponent(component);
 }
+
+function refreshEntitiesScroll() {
+    document.getElementById("entities_list").innerHTML = "";
+    for (let i = 0; i < screen.entities.length; ++i) {
+        let btn = document.createElement("button");
+        btn.onclick = () => screen.editComponent(screen.entities[i]);
+        btn.className = "list-group-item list-group-item-action primitiveItem";
+        btn.innerHTML = screen.entities[i].type.charAt(0).toUpperCase() + screen.entities[i].type.slice(1) + screen.entities[i].id;
+        document.getElementById("entities_list").appendChild(btn);
+    }
+}

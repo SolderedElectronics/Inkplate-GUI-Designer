@@ -47,10 +47,29 @@ class FileTab {
             entities: screen.entities
         };
 
+        for (let i = 0; i < screen.entities.length; ++i) {
+            if (screen.entities[i].type == "bitmap" && !screen.entities[i].base64) {
+                let c = document.createElement('canvas');
+                c.width = screen.entities[i].file.width;
+                c.height = screen.entities[i].file.height;
+
+                let ctx = c.getContext("2d");
+                ctx.drawImage(screen.entities[i].file, 0, 0);
+
+                screen.entities[i].base64 = c.toDataURL();
+            }
+        }
+
         let a = document.createElement('a');
         a.href = "data:application/octet-stream," + encodeURIComponent(JSON.stringify(s));
         a.download = 'save.json';
         a.click();
+
+        for (let i = 0; i < screen.entities.length; ++i) {
+            if (screen.entities[i].type == "bitmap" && !screen.entities[i].base64) {
+                screen.entities[i].base64 = undefined;
+            }
+        }
     }
 
     load() {
@@ -65,13 +84,21 @@ class FileTab {
             reader.onload = (function () {
                 let el = JSON.parse(reader.result);
 
+                screen.entities = [];
+                primitiveIdCount = el.primitiveCount;
+                widgetsIdCount = el.widgetCount;
+
                 for (let en of el.entities) {
                     if (en.type == "widget") {
                         screen.entities.push(_.merge(_.cloneDeep(widgets.find(el => el.name == en.name)), en));
-                        screen.entities[screen.entities.length - 1].id = widgetsIdCount++;
                     } else {
+                        if (en.type == "bitmap") {
+                            en.url = en.base64;
+                            en.base64 = undefined;
+                            en.file = new Image();
+                            en.file.src = en.url;
+                        }
                         screen.entities.push(_.merge(new primitiveDict[en.type], en));
-                        screen.entities[screen.entities.length - 1].id = primitiveIdCount[en.type]++;
                     }
                 }
             });

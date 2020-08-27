@@ -21,7 +21,7 @@
             onclick="fileTab.exportC()"
             style="padding-bottom: 1px; padding-top: 1px; margin: 1px"
           >
-            Export C Code
+            Export Arduino Code
           </button>
           &nbsp;
           <input
@@ -89,9 +89,9 @@
           <div class="scrollWrap" style="margin: 0; width: 100%">
             <div
               class="list-group"
-              style="font-size: 12px; padding: 0; margin: 0"
+              style="font-size: 16px; padding: 0; margin: 0; position: relative"
             >
-              <h4 class="primitiveItem active list-group-item">Primitives</h4>
+              <h5 class="primitiveItem active list-group-item">Primitives</h5>
 
               <button
                 class="list-group-item list-group-item-action primitiveItem"
@@ -143,11 +143,32 @@
               </button>
 
               <hr />
-              <h4 class="primitiveItem active list-group-item">Widgets</h4>
+              <h5 class="primitiveItem active list-group-item">Widgets</h5>
 
               <div id="widgets"></div>
 
               <hr />
+
+              <div style="position: absolute; bottom: 0px; width: 100%">
+                <h5 class="primitiveItem active list-group-item">Entities</h5>
+                <div
+                  class="list-group"
+                  style="
+                    max-height: 150px;
+                    margin-bottom: 10px;
+                    overflow: scroll;
+                    direction: ltr;
+                  "
+                  id="entities_list"
+                >
+                  <button
+                    class="list-group-item list-group-item-action primitiveItem"
+                    onclick="screen.editComponent(screen.entities[0])"
+                  >
+                    Text0
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -160,7 +181,12 @@
         </div>
         <div class="settings shadow bg-white rounded">a</div>
       </div>
-      <div class="footer shadow">Copyright: e-radionica.com 2020</div>
+      <div class="footer shadow" style="text-align: right; padding-right: 15px">
+        Open Source Software:
+        <a href="https://github.com/nitko12/Inkplate-GUI-Designer"
+          >Github Repo</a
+        >
+      </div>
     </div>
 
     <template id="headingTemplate">

@@ -2,6 +2,10 @@ let graph = {
     name: "Graph",
     type: "widget",
     id: 0,
+    infoLink: {
+        label: "Click here for info!",
+        url: "https://inkplate.readthedocs.io/en/latest/gui-designer.html#editing-widgets"
+    },
     variables: {
         "n": {
             default: 32,

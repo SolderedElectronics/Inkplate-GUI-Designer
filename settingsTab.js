@@ -148,6 +148,12 @@ function textAreaTemplate(name, settings) {
         clone.querySelector(".mainCheckbox").style.display = "none";
     }
 
+    if (settings.infoLink) {
+        clone.querySelector(".cname").innerHTML = `<a href="${settings.infoLink.url}">${settings.infoLink.label}</a>`;
+    } else {
+        clone.querySelector(".cname").style.display = "none";
+    }
+
     clone.querySelector(".mainInput").id = name + "_text_input";
     clone.querySelector(".mainInput").defaultValue = settings.default;
 

@@ -114,10 +114,13 @@ class Screen {
         settingsDict["textArea"]("Variables Edit", {
             type: "textArea",
             default: JSON.stringify(widget.variables, undefined, 4),
+            infoLink: widget.infoLink,
             optional: false
         });
 
         settingsDict["makeButton"]();
+
+        refreshEntitiesScroll();
     }
 
     addComponent(settings) {
@@ -186,6 +189,7 @@ class Screen {
 
         this.entities[this.entities.length - 1].id = primitiveIdCount[settings.type]++;
 
+        refreshEntitiesScroll();
         return this.entities[this.entities.length - 1];
     }
 
