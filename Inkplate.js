@@ -10,8 +10,8 @@ class Inkplate {
 
         this.outline = 0;
 
-        this.width = 800;
-        this.height = 600;
+        this.width = globalW;
+        this.height = globalH;
 
         this.cursor = {
             x: 0,
@@ -25,11 +25,11 @@ class Inkplate {
     }
 
     scaleX(x) {
-        return this.xOffset + this.outline + x;
+        return this.xOffset + this.outline + x * (800 / globalW);
     }
 
     scaleY(y) {
-        return this.yOffset + this.outline + y;
+        return this.yOffset + this.outline + y * (600 / globalH);
     }
 
     setFontSize(s) {
@@ -291,9 +291,9 @@ class Inkplate {
 
     print(text) {
         this.ctx.fillStyle = `rgb(${this.color << 5}, ${this.color << 5}, ${this.color << 5})`;
-        this.ctx.font = this.fontSize + " Arial";
+        this.ctx.font = parseInt(this.fontSize) + "px Arial";
 
-        let maxWidth = 800 - this.cursor.x + this.outline;
+        let maxWidth = globalW - this.cursor.x + this.outline;
 
         let words = text.split(" ");
         let lines = [];

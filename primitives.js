@@ -285,7 +285,7 @@ class rect {
             "radius": {
                 type: "int",
                 min: 0,
-                max: 800,
+                max: globalW,
                 default: 0,
                 optional: true
             }
@@ -452,8 +452,8 @@ class text {
             "cursor": {
                 type: "coordinate",
                 default: {
-                    x: 100,
-                    y: 100
+                    x: 300,
+                    y: 290
                 },
                 optional: false
             },

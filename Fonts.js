@@ -19,7 +19,7 @@ class Fonts {
         // for (let i = 32; i <= 126; ++i)
         //     s += String.fromCharCode(i);
 
-        // canvas.width = 800;
+        // canvas.width = globalW;
         // canvas.height = parseInt(name) * 1.4;
 
         // ctx.scale(1, 1);

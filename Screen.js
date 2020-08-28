@@ -15,8 +15,8 @@ class Screen {
         this.display.outline = this.outline;
         this.ui.outline = this.outline;
 
-        this.width = 800 + 2 * this.outline;
-        this.height = 600 + 2 * this.outline;
+        this.width = globalW + 2 * this.outline;
+        this.height = globalH + 2 * this.outline;
 
         this.mouse = {
             x: 0,
@@ -65,8 +65,10 @@ class Screen {
             settingsDict["clear"]();
             settingsDict["heading"]("Editing <i>" + component.type + component.id + "</i>");
 
+            console.log(component)
             for (const [key, value] of Object.entries(editable)) {
                 settingsDict[value.type](key, {
+                    value: component[key],
                     ...value,
                     name: component.type + component.id.toString()
                 });
@@ -92,6 +94,7 @@ class Screen {
         }
 
         settingsDict["makeButton"]();
+        refreshEntitiesScroll();
     }
 
 
@@ -155,7 +158,7 @@ class Screen {
                 settings["center"].x,
                 settings["center"].y,
                 settings["radius"],
-                settings["colors"],
+                settings["color"],
                 settings["fill"]
             ));
         } else if (settings.type == "triangle") {
@@ -200,17 +203,15 @@ class Screen {
         let x = 1 / this.scale * (e.clientX - rect.left) - this.outline - this.xOffset;
         let y = 1 / this.scale * (e.clientY - rect.top) - this.outline - this.yOffset;
 
-
-
-        if (-7 <= x && x < 807 && -7 <= y && y < 607) {
-            x = Math.min(Math.max(x, 0), 800);
-            y = Math.min(Math.max(y, 0), 600);
+        if (-7 <= x && x < globalW + 7 && -7 <= y && y < globalH + 7) {
+            x = Math.min(Math.max(x, 0), globalW);
+            y = Math.min(Math.max(y, 0), globalH);
 
             let n = 3;
 
             for (let i = 0; i < (1 << n) + 1; ++i) {
-                let xm = i / (1 << n) * 800;
-                let ym = i / (1 << n) * 600;
+                let xm = i / (1 << n) * globalW;
+                let ym = i / (1 << n) * globalH;
 
                 if (document.getElementById("magnet").checked && xm - 7 <= x && x < xm + 7) {
                     x = xm;
@@ -259,7 +260,7 @@ class Screen {
         this.ui.xOffset = this.xOffset;
         this.ui.yOffset = this.yOffset;
 
-        this.display.scale = Math.min(800 / canvas.width, 600 / canvas.height);
+        this.display.scale = Math.min(globalW / canvas.width, globalH / canvas.height);
     }
 
     drawOutline() {
@@ -278,7 +279,7 @@ class Screen {
 
         updateValues();
 
-        this.mouseOnEntity.set(parseInt(this.mouse.x), parseInt(this.mouse.y));
+        this.mouseOnEntity.set(parseInt(this.mouse.x * globalW / 800), parseInt(this.mouse.y * globalH / 600));
     }
 
     drawEntities() {
@@ -340,15 +341,15 @@ class Screen {
         let p = [];
         for (const e of this.entities) {
             for (const m of e.modifiers) {
-                if (e.type != "widget" && e[m].distSqr(this.mouse.x, this.mouse.y) < 150) {
+                if (e.type != "widget" && e[m].distSqr(this.mouse.x * (globalW / 800), this.mouse.y * (globalH / 600)) < 150) {
                     p.push({
-                        d: e[m].distSqr(this.mouse.x, this.mouse.y),
+                        d: e[m].distSqr(this.mouse.x * (globalW / 800), this.mouse.y * (globalH / 600)),
                         e: e[m],
                         g: e
                     });
-                } else if (e.type == "widget" && e.variables[m].distSqr(this.mouse.x, this.mouse.y) < 150) {
+                } else if (e.type == "widget" && e.variables[m].distSqr(this.mouse.x * (globalW / 800), this.mouse.y * (globalH / 600)) < 150) {
                     p.push({
-                        d: e.variables[m].distSqr(this.mouse.x, this.mouse.y),
+                        d: e.variables[m].distSqr(this.mouse.x * (globalW / 800), this.mouse.y * (globalH / 600)),
                         e: e.variables[m],
                         g: e,
                     });
@@ -366,18 +367,37 @@ class Screen {
             this.mouseOnEntity = p[0].e;
             this.mouseOnComponent = p[0].g;
 
-            if (this.mouseOnComponent && this.mouseOnComponent.type == "widget")
-                this.ui.drawPicker(p[0].e.default.x, p[0].e.default.y);
-            else
+            if (this.mouseOnComponent && this.mouseOnComponent.type == "widget") {
+                if (p[0].e.value)
+                    this.ui.drawPicker(p[0].e.value.x, p[0].e.value.y);
+                else
+                    this.ui.drawPicker(p[0].e.default.x, p[0].e.default.y);
+            } else {
                 this.ui.drawPicker(p[0].e.x, p[0].e.y);
+            }
         }
     }
 
     draw() {
+        this.ctx.fillStyle = "#f6f6f6";
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
+
         this.preCalculate();
         this.moveEntities();
         this.drawEntities();
         this.drawMouse();
+
+        if (this.currentlySelected)
+            for (let m of this.currentlySelected.modifiers)
+                if (this.currentlySelected.type == "widget") {
+                    if (this.currentlySelected.variables[m].value)
+                        this.ui.drawPicker(this.currentlySelected.variables[m].value.x, this.currentlySelected.variables[m].value.y);
+                    else
+                        this.ui.drawPicker(this.currentlySelected.variables[m].default.x, this.currentlySelected.variables[m].default.y);
+                } else {
+                    this.ui.drawPicker(this.currentlySelected[m].x, this.currentlySelected[m].y);
+                }
+
         this.drawOutline();
 
         for (let l of this.UIlines) {

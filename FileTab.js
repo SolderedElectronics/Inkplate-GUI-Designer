@@ -101,6 +101,7 @@ class FileTab {
                         screen.entities.push(_.merge(new primitiveDict[en.type], en));
                     }
                 }
+                refreshEntitiesScroll();
             });
 
             reader.readAsText(f);

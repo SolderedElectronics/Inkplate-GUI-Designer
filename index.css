@@ -17,8 +17,7 @@ body {
 }
 
 .header {
-    background-color: #264653;
-
+    background-color: #0e84cc;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -29,7 +28,7 @@ body {
 
 .footer {
     height: 25px;
-    background-color: #264653;
+    background-color: #0e84cc;
     text-align: center;
 }
 
@@ -55,6 +54,7 @@ body {
 .components {
     display: flex;
     min-height: min-content;
+    background-color: #cccccc;
 }
 
 .primitiveItem {
@@ -62,7 +62,7 @@ body {
     padding-top: 2px !important;
     padding-bottom: 2px !important;
     padding-right: 3px !important;
-
+    background-color: #cccccc;
 }
 
 .screen {
@@ -71,4 +71,5 @@ body {
 
 .settings {
     width: 200px;
+    background-color: #cccccc;
 }

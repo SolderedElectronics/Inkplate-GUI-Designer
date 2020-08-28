@@ -14,45 +14,68 @@
     <div class="wrapper">
       <div class="header">
         <div class="dropdown" style="margin-left: 10px; margin-right: 10px">
-          <b>GUI &nbsp; </b>
+          <b style="color: white">Inkplate user interface designer &nbsp; </b>
+          <div
+            class="btn btn-secondary"
+            style="
+              padding-bottom: 1px;
+              padding-top: 1px;
+              padding-left: 5px;
+              padding-right: 5px;
+              background-color: #aaaaaa;
+              height: 27px;
+            "
+          >
+            <label for="sel1">Inkplate version:</label>
+            <select
+              id="sel1"
+              style="
+                font-size: small;
+                padding-bottom: 1px;
+                padding-top: 1px;
+                margin: 1px;
+                width: 100px;
+                height: 100%;
+              "
+              onchange="changeInkplate()"
+            >
+              <option selected="selected">Inkplate 6</option>
+              <option>Inkplate 6+</option>
+              <option>Inkplate 10</option>
+            </select>
+          </div>
+          &nbsp;
+          <label
+            for="magnet"
+            class="btn btn-secondary"
+            style="
+              padding-bottom: 1px;
+              padding-top: 1px;
+              margin: 1px;
+              background-color: #aaaaaa;
+            "
+          >
+            <input
+              type="checkbox"
+              aria-describedby="inputGroup-sizing-sm"
+              style="height: 16px"
+              id="magnet"
+            />
+            Magnet clipping
+          </label>
+          &nbsp;
           <button
             class="btn btn-primary"
             type="button"
             onclick="fileTab.exportC()"
-            style="padding-bottom: 1px; padding-top: 1px; margin: 1px"
+            style="
+              padding-bottom: 1px;
+              padding-top: 1px;
+              background-color: #aaaaaa;
+            "
           >
             Export Arduino Code
           </button>
-          &nbsp;
-          <input
-            type="checkbox"
-            aria-label="Small"
-            aria-describedby="inputGroup-sizing-sm"
-            id="magnet"
-          />
-          <label
-            for="magnet"
-            class="btn btn-secondary"
-            style="padding-bottom: 1px; padding-top: 1px; margin: 1px"
-            >Magnet clipping</label
-          >
-          &nbsp;
-          <label for="sel1">Inkplate version:</label>
-          <select
-            id="sel1"
-            style="
-              font-size: small;
-              padding-bottom: 1px;
-              padding-top: 1px;
-              margin: 1px;
-              width: 100px;
-              height: 100%;
-            "
-          >
-            <option>Inkplate 6</option>
-            <option>Inkplate 10</option>
-            <option>Top secret</option>
-          </select>
 
           <button
             class="btn btn-primary float-right"
@@ -62,7 +85,9 @@
               padding-bottom: 1px;
               padding-top: 1px;
               margin: 1px;
-              margin-right: 100px;
+              margin-right: 5px;
+              margin-top: 3px;
+              background-color: #aaaaaa;
             "
           >
             Save
@@ -77,6 +102,8 @@
               padding-top: 1px;
               margin: 1px;
               margin-right: 5px;
+              margin-top: 3px;
+              background-color: #aaaaaa;
             "
           >
             Load
@@ -85,13 +112,18 @@
       </div>
 
       <div class="content">
-        <div class="components shadow bg-white rounded">
+        <div class="components shadow rounded">
           <div class="scrollWrap" style="margin: 0; width: 100%">
             <div
               class="list-group"
               style="font-size: 16px; padding: 0; margin: 0; position: relative"
             >
-              <h5 class="primitiveItem active list-group-item">Primitives</h5>
+              <h5
+                class="primitiveItem list-group-item"
+                style="background-color: #aaaaaa"
+              >
+                Primitives
+              </h5>
 
               <button
                 class="list-group-item list-group-item-action primitiveItem"
@@ -143,14 +175,24 @@
               </button>
 
               <hr />
-              <h5 class="primitiveItem active list-group-item">Widgets</h5>
+              <h5
+                class="primitiveItem list-group-item"
+                style="background-color: #aaaaaa"
+              >
+                Widgets
+              </h5>
 
               <div id="widgets"></div>
 
               <hr />
 
               <div style="position: absolute; bottom: 0px; width: 100%">
-                <h5 class="primitiveItem active list-group-item">Entities</h5>
+                <h5
+                  class="primitiveItem list-group-item"
+                  style="background-color: #aaaaaa"
+                >
+                  Entities
+                </h5>
                 <div
                   class="list-group"
                   style="
@@ -158,11 +200,13 @@
                     margin-bottom: 10px;
                     overflow: scroll;
                     direction: ltr;
+                    background-color: #cccccc;
                   "
                   id="entities_list"
                 >
                   <button
                     class="list-group-item list-group-item-action primitiveItem"
+                    style="background-color: #cccccc"
                     onclick="screen.editComponent(screen.entities[0])"
                   >
                     Text0
@@ -179,13 +223,40 @@
         >
           <canvas style="width: 100%; height: 100%" id="canvas"></canvas>
         </div>
-        <div class="settings shadow bg-white rounded">a</div>
+        <div class="settings shadow rounded">a</div>
       </div>
-      <div class="footer shadow" style="text-align: right; padding-right: 15px">
-        Open Source Software:
-        <a href="https://github.com/nitko12/Inkplate-GUI-Designer"
-          >Github Repo</a
+
+      <div class="footer shadow" style="width: 100%">
+        <span style="float: right; padding-right: 10px">
+          Made by
+          <a
+            href="https://e-radionica.com/"
+            style="color: #cccccc"
+            target="_blank"
+            >e-radionica.com</a
+          ></span
         >
+
+        <span style="float: center; padding-left: 10px">
+          Work in progress, please
+          <a
+            href="https://github.com/e-radionicacom/Inkplate-GUI-Designer/issues"
+            target="_blank"
+            style="color: #aaaaaa"
+            >report
+          </a>
+          all issues
+        </span>
+
+        <span style="float: left; padding-left: 10px">
+          Open Source Software:
+          <a
+            href="https://github.com/e-radionicacom/Inkplate-GUI-Designer"
+            target="_blank"
+            style="color: #aaaaaa"
+            >Github Repo</a
+          >
+        </span>
       </div>
     </div>
 
@@ -218,7 +289,7 @@
         />
       </div>
       <div style="width: 100%; padding-bottom: 0px">
-        <p class="cname text-right" style="font-size: 10px; padding: 3px">
+        <p class="cname text-right" style="font-size: 10px; padding: 2px">
           test
         </p>
       </div>
@@ -250,7 +321,7 @@
       <div style="width: 100%">
         <p
           class="cname text-right"
-          style="font-size: 10px; margin-bottom: 2px; padding: 3px"
+          style="font-size: 10px; margin-bottom: 2px; padding: 2px"
         >
           test
         </p>
@@ -283,7 +354,7 @@
       <div style="width: 100%">
         <p
           class="cname text-right"
-          style="font-size: 10px; margin-bottom: 2px; padding: 3px"
+          style="font-size: 10px; margin-bottom: 2px; padding: 2px"
         >
           test
         </p>
@@ -314,7 +385,7 @@
         />
       </div>
       <div style="width: 100%">
-        <p class="cname text-right" style="font-size: 10px; padding: 3px">
+        <p class="cname text-right" style="font-size: 10px; padding: 2px">
           test
         </p>
       </div>
@@ -344,7 +415,7 @@
         />
       </div>
       <div style="width: 100%">
-        <p class="cname text-right" style="font-size: 10px; padding: 3px">
+        <p class="cname text-right" style="font-size: 10px; padding: 2px">
           test
         </p>
       </div>
@@ -375,7 +446,7 @@
         ></textarea>
       </div>
       <div style="width: 100%">
-        <p class="cname text-right" style="font-size: 10px; padding: 3px">
+        <p class="cname text-right" style="font-size: 10px; padding: 2px">
           test
         </p>
       </div>

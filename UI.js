@@ -10,16 +10,16 @@ class UI {
 
         this.outline = 0;
 
-        this.width = 800;
-        this.height = 600;
+        this.width = globalW;
+        this.height = globalH;
     }
 
     scaleX(x) {
-        return this.xOffset + this.outline + x;
+        return this.xOffset + this.outline + x * (800 / globalW);
     }
 
     scaleY(y) {
-        return this.yOffset + this.outline + y;
+        return this.yOffset + this.outline + y * (600 / globalH);
     }
 
     drawPicker(x, y) {
@@ -37,7 +37,7 @@ class UI {
         this.ctx.setLineDash([15, 15, 12, 12, 10, 10, 8, 8, 6, 6, 4, 4].slice(p * 2 - 2, p * 2));
 
         this.ctx.moveTo(this.scaleX(x), this.scaleY(0));
-        this.ctx.lineTo(this.scaleX(x), this.scaleY(600));
+        this.ctx.lineTo(this.scaleX(x), this.scaleY(globalH));
 
         this.ctx.stroke();
         this.ctx.setLineDash([]);
@@ -51,7 +51,7 @@ class UI {
         this.ctx.setLineDash([15, 15, 12, 12, 10, 10, 8, 8, 6, 6, 4, 4].slice(p * 2 - 2, p * 2));
 
         this.ctx.moveTo(this.scaleX(0), this.scaleY(y));
-        this.ctx.lineTo(this.scaleX(800), this.scaleY(y));
+        this.ctx.lineTo(this.scaleX(globalW), this.scaleY(y));
 
         this.ctx.stroke();
         this.ctx.setLineDash([]);

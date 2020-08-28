@@ -1,3 +1,26 @@
+let globalW = 800;
+let globalH = 600;
+
+function changeInkplate() {
+    if (document.getElementById("sel1").value == "Inkplate 6") {
+        globalW = 800;
+        globalH = 600;
+    } else if (document.getElementById("sel1").value == "Inkplate 6+") {
+        globalW = 1024;
+        globalH = 758;
+    } else if (document.getElementById("sel1").value == "Inkplate 10") {
+        globalW = 1200;
+        globalH = 825;
+    }
+
+    console.log(screen.width, screen.height)
+    console.log(screen.ui.width, screen.ui.height)
+
+
+    screen.ui.width = globalW;
+    screen.ui.height = globalH;
+}
+
 function clear() {
     document.getElementsByClassName("settings")[0].innerHTML = "";
 }
@@ -23,7 +46,7 @@ function boolTemplate(name, settings) {
     clone.querySelector(".mainInput").id = name + "_input";
     clone.querySelector(".mainInput").min = settings.min;
     clone.querySelector(".mainInput").max = settings.max;
-    clone.querySelector(".mainInput").defaultValue = settings.default;
+    clone.querySelector(".mainInput").defaultValue = settings.value || settings.default;
 
     if (settings.max - settings.min < 10) {
         clone.querySelector(".mainInput").type = "range";
@@ -53,7 +76,8 @@ function intTemplate(name, settings) {
     clone.querySelector(".mainInput").id = name + "_input";
     clone.querySelector(".mainInput").min = settings.min;
     clone.querySelector(".mainInput").max = settings.max;
-    clone.querySelector(".mainInput").defaultValue = settings.default;
+    clone.querySelector(".mainInput").defaultValue = settings.value || settings.default;
+    clone.querySelector(".mainInput").value = settings.value || settings.default;
 
     if (settings.max - settings.min < 10) {
         clone.querySelector(".mainInput").type = "range";
@@ -89,7 +113,7 @@ function floatTemplate(name, settings) {
     clone.querySelector(".mainInput").id = name + "_input";
     clone.querySelector(".mainInput").min = settings.min;
     clone.querySelector(".mainInput").max = settings.max;
-    clone.querySelector(".mainInput").defaultValue = settings.default;
+    clone.querySelector(".mainInput").defaultValue = settings.value || settings.default;
 
     if (settings.max - settings.min < 10) {
         clone.querySelector(".mainInput").type = "range";
@@ -102,14 +126,16 @@ function coordinateTemplate(name, settings) {
     intTemplate(name + "_x", {
         ...settings,
         min: 0,
-        max: 800,
-        default: settings.default.x
+        max: globalW,
+        default: settings.default.x,
+        value: settings.value ? settings.value.x : null
     });
     intTemplate(name + "_y", {
         ...settings,
         min: 0,
-        max: 600,
-        default: settings.default.y
+        max: globalH,
+        default: settings.default.y,
+        value: settings.value ? settings.value.y : null
     });
     document.getElementsByClassName("settings")[0].innerHTML += "<br>";
 }
@@ -132,7 +158,7 @@ function textTemplate(name, settings) {
     }
 
     clone.querySelector(".mainInput").id = name + "_text_input";
-    clone.querySelector(".mainInput").defaultValue = settings.default;
+    clone.querySelector(".mainInput").defaultValue = settings.value || settings.default;
 
     document.getElementsByClassName("settings")[0].appendChild(clone);
 }
@@ -149,13 +175,13 @@ function textAreaTemplate(name, settings) {
     }
 
     if (settings.infoLink) {
-        clone.querySelector(".cname").innerHTML = `<a href="${settings.infoLink.url}">${settings.infoLink.label}</a>`;
+        clone.querySelector(".cname").innerHTML = `<a href="${settings.infoLink.url}" target="_blank">${settings.infoLink.label}</a>`;
     } else {
         clone.querySelector(".cname").style.display = "none";
     }
 
     clone.querySelector(".mainInput").id = name + "_text_input";
-    clone.querySelector(".mainInput").defaultValue = settings.default;
+    clone.querySelector(".mainInput").defaultValue = settings.value || settings.default;
 
     document.getElementsByClassName("settings")[0].appendChild(clone);
 }
@@ -169,6 +195,7 @@ function fileTemplate(name, settings) {
         clone.querySelector(".mainCheckbox").style.display = "none";
     }
 
+    clone.querySelector(".cname").style.display = "none";
     clone.querySelector(".mainInput").id = name + "_input";
 
     document.getElementsByClassName("settings")[0].innerHTML += "<br>";
@@ -308,6 +335,8 @@ function addEntity() {
         screen.entities = screen.entities.filter(el => !cmp(el, screen.currentlySelected));
         screen.currentlySelected = null;
         clear();
+
+        refreshEntitiesScroll();
         return;
     };
 
