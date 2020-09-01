@@ -32,6 +32,10 @@ class Screen {
 
         this.mouseOnEntity = null;
 
+        this.globalMoveState = 0;
+        this.globalMoveComponent = null;
+        this.globalMoveLast = null;
+
         this.entities = [
             //new line(0, 0, 100, 100, 0, null, 1),
             //new rect(0, 0, 100, 100, 0, false, 0, false),
@@ -56,7 +60,6 @@ class Screen {
                 default: JSON.stringify(widget.variables, undefined, 4),
                 optional: false
             });
-
             settingsDict["makeButton"]();
             //this.entities.push(widget);
         } else {
@@ -65,7 +68,6 @@ class Screen {
             settingsDict["clear"]();
             settingsDict["heading"]("Editing <i>" + component.type + component.id + "</i>");
 
-            console.log(component)
             for (const [key, value] of Object.entries(editable)) {
                 settingsDict[value.type](key, {
                     value: component[key],
@@ -74,6 +76,7 @@ class Screen {
                 });
             }
 
+            document.getElementsByClassName("settings")[0].innerHTML += `<a style='margin-left: 25px;font-size:10px;' href='${component.docs}'>Click for more info!</a>`;
             settingsDict["makeButton"]();
         }
     }
@@ -93,6 +96,7 @@ class Screen {
             settingsDict[value.type](key, value);
         }
 
+        document.getElementsByClassName("settings")[0].innerHTML += `<a style='margin-left: 25px;font-size:10px' href='${(new primitiveDict[component]).docs}'>Click for more info!</a>`;
         settingsDict["makeButton"]();
         refreshEntitiesScroll();
     }
@@ -182,10 +186,10 @@ class Screen {
             ));
         } else if (settings.type == "bitmap") {
             this.entities.push(new primitiveDict["bitmap"](
-                settings["a"].x,
-                settings["a"].y,
-                settings["b"].x,
-                settings["b"].y,
+                settings["corner"].x,
+                settings["corner"].y,
+                settings["width"],
+                settings["height"],
                 settings["url"],
             ));
         }
@@ -318,7 +322,7 @@ class Screen {
                 else if (!e.radius && e.fill)
                     this.display.fillRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["color"]);
                 else if (!e.radius && !e.fill)
-                    this.display.drawRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["color"]);
+                    this.display.drawRect(e["a"].x, e["a"].y, e["c"].x - e["a"].x, e["c"].y - e["a"].y, e["color"]);
             } else if (e.type == "text") {
                 this.display.setFont(e["font"]);
                 this.display.setFontSize(e["size"]);
@@ -329,7 +333,7 @@ class Screen {
                 e.draw(this.display);
             } else if (e.type == "bitmap") {
                 if (e.file && e.file.complete) {
-                    this.display.drawBitmap3Bit(e["a"].x, e["a"].y, e.file, e["b"].x - e["a"].x, e["b"].y - e["a"].y);
+                    this.display.drawBitmap3Bit(e["corner"].x, e["corner"].y, e.file, e["width"], e["height"]);
                 };
             }
         }
@@ -378,6 +382,46 @@ class Screen {
         }
     }
 
+    globalMove() {
+        if (this.mouseOnEntity)
+            return;
+
+        let s = null;
+        for (const e of this.entities) {
+            if (e.mouseOn && e.mouseOn(this.mouse.x, this.mouse.y)) {
+                s = e;
+                for (const m of e.modifiers) {
+                    this.ui.drawPicker(e[m].x, e[m].y);
+                }
+                this.globalMoveState = 1;
+            }
+        }
+
+        if (this.globalMoveComponent)
+            this.globalMoveState = 1;
+
+        if (this.globalMoveState == 1 && this.mouse.down) {
+            if (!this.globalMoveComponent)
+                this.globalMoveComponent = s;
+            this.globalMoveState = 2;
+        }
+
+        if ((this.globalMoveState == 1 || this.globalMoveState == 2) && !this.mouse.down) {
+            this.globalMoveState = 0;
+            this.globalMoveComponent = null;
+        }
+
+        if (this.globalMoveState == 2 && this.mouse.down && this.globalMoveComponent.moveDelta) {
+            this.editComponent(this.globalMoveComponent)
+            this.globalMoveComponent.moveDelta(this.mouse.x - this.globalMoveLast.x, this.mouse.y - this.globalMoveLast.y);
+        }
+
+        this.globalMoveLast = {
+            x: this.mouse.x,
+            y: this.mouse.y
+        }
+    }
+
     draw() {
         this.ctx.fillStyle = "#f6f6f6";
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
@@ -386,6 +430,7 @@ class Screen {
         this.moveEntities();
         this.drawEntities();
         this.drawMouse();
+        this.globalMove();
 
         if (this.currentlySelected)
             for (let m of this.currentlySelected.modifiers)

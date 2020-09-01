@@ -202,6 +202,14 @@ class Inkplate {
     }
 
     drawRect(x, y, w, h, c) {
+        if (w < 0) {
+            x += w;
+            w *= -1;
+        }
+        if (h < 0) {
+            y += h;
+            h *= -1;
+        }
         const [_x0, _x1] = [x, x + w].map(this.scaleX.bind(this));
         const [_y0, _y1] = [y, y + h].map(this.scaleY.bind(this));
 
@@ -217,6 +225,14 @@ class Inkplate {
     }
 
     drawRoundRect(x, y, w, h, r, c) {
+        if (w < 0) {
+            x += w;
+            w *= -1;
+        }
+        if (h < 0) {
+            y += h;
+            h *= -1;
+        }
         if (Math.abs(w) < 2 * r) r = 0;
         if (Math.abs(h) < 2 * r) r = 0;
 
@@ -235,6 +251,14 @@ class Inkplate {
     }
 
     fillRect(x, y, w, h, c) {
+        if (w < 0) {
+            x += w;
+            w *= -1;
+        }
+        if (h < 0) {
+            y += h;
+            h *= -1;
+        }
         const [_x0, _x1] = [x, x + w].map(this.scaleX.bind(this));
         const [_y0, _y1] = [y, y + h].map(this.scaleY.bind(this));
 
@@ -249,6 +273,14 @@ class Inkplate {
     }
 
     fillRoundRect(x, y, w, h, r, c) {
+        if (w < 0) {
+            x += w;
+            w *= -1;
+        }
+        if (h < 0) {
+            y += h;
+            h *= -1;
+        }
         if (Math.abs(w) < 2 * r) r = 0;
         if (Math.abs(h) < 2 * r) r = 0;
 

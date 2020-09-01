@@ -13,10 +13,6 @@ function changeInkplate() {
         globalH = 825;
     }
 
-    console.log(screen.width, screen.height)
-    console.log(screen.ui.width, screen.ui.height)
-
-
     screen.ui.width = globalW;
     screen.ui.height = globalH;
 }
@@ -35,9 +31,9 @@ function headingTemplate(name) {
 function boolTemplate(name, settings) {
     let clone = document.getElementById("boolTemplate").content.cloneNode(true);
 
-    clone.querySelector(".name").innerHTML = name;
+    clone.querySelector(".name").innerHTML = name.charAt(0).toUpperCase() + name.slice(1);
 
-    if (settings.name) {
+    if (settings.name && !settings.excludeFromC) {
         clone.querySelector(".cname").innerHTML = "Name in C code: " + settings.name + "_" + name;
     } else {
         clone.querySelector(".cname").style.display = "none";
@@ -65,15 +61,15 @@ function boolTemplate(name, settings) {
 function intTemplate(name, settings) {
     let clone = document.getElementById("intTemplate").content.cloneNode(true);
 
-    clone.querySelector(".name").innerHTML = name;
+    clone.querySelector(".name").innerHTML = name.charAt(0).toUpperCase() + name.slice(1);
 
-    if (settings.name) {
-        clone.querySelector(".cname").innerHTML = "Name in C code: " + settings.name + "_" + name;
+    if (settings.name && !settings.excludeFromC) {
+        clone.querySelector(".cname").innerHTML = "Name in C code: " + settings.name + "_" + name.replaceAll(" ", "_");
     } else {
         clone.querySelector(".cname").style.display = "none";
     }
 
-    clone.querySelector(".mainInput").id = name + "_input";
+    clone.querySelector(".mainInput").id = name.replaceAll(" ", "_") + "_input";
     clone.querySelector(".mainInput").min = settings.min;
     clone.querySelector(".mainInput").max = settings.max;
     clone.querySelector(".mainInput").defaultValue = settings.value || settings.default;
@@ -96,9 +92,9 @@ function intTemplate(name, settings) {
 function floatTemplate(name, settings) {
     let clone = document.getElementById("floatTemplate").content.cloneNode(true);
 
-    clone.querySelector(".name").innerHTML = name;
+    clone.querySelector(".name").innerHTML = name.charAt(0).toUpperCase() + name.slice(1);
 
-    if (settings.name) {
+    if (settings.name && !settings.excludeFromC) {
         clone.querySelector(".cname").innerHTML = "Name in C code: " + settings.name + "_" + name;
     } else {
         clone.querySelector(".cname").style.display = "none";
@@ -123,14 +119,14 @@ function floatTemplate(name, settings) {
 }
 
 function coordinateTemplate(name, settings) {
-    intTemplate(name + "_x", {
+    intTemplate(name + " x", {
         ...settings,
         min: 0,
         max: globalW,
         default: settings.default.x,
         value: settings.value ? settings.value.x : null
     });
-    intTemplate(name + "_y", {
+    intTemplate(name + " y", {
         ...settings,
         min: 0,
         max: globalH,
@@ -143,9 +139,9 @@ function coordinateTemplate(name, settings) {
 function textTemplate(name, settings) {
     let clone = document.getElementById("textTemplate").content.cloneNode(true);
 
-    clone.querySelector(".name").innerHTML = name;
+    clone.querySelector(".name").innerHTML = name.charAt(0).toUpperCase() + name.slice(1);
 
-    if (settings.name) {
+    if (settings.name && !settings.excludeFromC) {
         clone.querySelector(".cname").innerHTML = "Name in C code: " + settings.name + "_" + name;
     } else {
         clone.querySelector(".cname").style.display = "none";
@@ -166,7 +162,7 @@ function textTemplate(name, settings) {
 function textAreaTemplate(name, settings) {
     let clone = document.getElementById("textAreaTemplate").content.cloneNode(true);
 
-    clone.querySelector(".name").innerHTML = name;
+    clone.querySelector(".name").innerHTML = name.charAt(0).toUpperCase() + name.slice(1);
 
     if (settings.optional) {
         clone.querySelector(".mainInput").disabled = true;
@@ -195,7 +191,12 @@ function fileTemplate(name, settings) {
         clone.querySelector(".mainCheckbox").style.display = "none";
     }
 
-    clone.querySelector(".cname").style.display = "none";
+    if (settings.file_name) {
+        clone.querySelector(".cname").innerHTML = settings.file_name;
+    } else {
+        clone.querySelector(".cname").style.display = "none";
+    }
+
     clone.querySelector(".mainInput").id = name + "_input";
 
     document.getElementsByClassName("settings")[0].innerHTML += "<br>";
@@ -205,9 +206,11 @@ function fileTemplate(name, settings) {
 function makeButton() {
     let clone = document.getElementById("buttonTemplate").content.cloneNode(true);
 
-    if (document.getElementsByClassName("settings")[0].querySelector("#content").innerHTML.startsWith("Editing"))
+    if (document.getElementsByClassName("settings")[0].querySelector("#content").innerHTML.startsWith("Editing")) {
         clone.querySelector("#desc").innerHTML = "Remove";
-
+        clone.querySelector("#desc").style.color = "white";
+        clone.querySelector("#desc").style.backgroundColor = "red";
+    }
     document.getElementsByClassName("settings")[0].innerHTML += "<br>";
     document.getElementsByClassName("settings")[0].appendChild(clone);
 }
@@ -269,6 +272,12 @@ function inputChanged(el) {
         en[name.substring(0, name.indexOf("_input"))] = URL.createObjectURL(el.files[0]);
         en["file"] = new Image();
         en["file"].src = en[name.substring(0, name.indexOf("_input"))];
+        en["file"].onload = () => {
+            screen.currentlySelected.width = en["file"].width;
+            screen.currentlySelected.height = en["file"].height;
+            screen.currentlySelected.file_name = el.files[0].name;
+            screen.editComponent(screen.currentlySelected);
+        }
     } else {
         screen.entities.find(
             el => el.type == screen.currentlySelected.type &&

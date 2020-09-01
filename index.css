@@ -72,4 +72,5 @@ body {
 .settings {
     width: 200px;
     background-color: #cccccc;
+    position: relative;
 }
