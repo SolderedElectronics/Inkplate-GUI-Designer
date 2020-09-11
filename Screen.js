@@ -60,6 +60,8 @@ class Screen {
                 default: JSON.stringify(widget.variables, undefined, 4),
                 optional: false
             });
+            console.log(component)
+            document.getElementsByClassName("settings")[0].innerHTML += `<a style='margin-left: 25px;font-size:10px;' href='${component.infoLink.url}' target="_blank">Click for more info!</a>`;
             settingsDict["makeButton"]();
             //this.entities.push(widget);
         } else {
@@ -76,7 +78,7 @@ class Screen {
                 });
             }
 
-            document.getElementsByClassName("settings")[0].innerHTML += `<a style='margin-left: 25px;font-size:10px;' href='${component.docs}'>Click for more info!</a>`;
+            document.getElementsByClassName("settings")[0].innerHTML += `<a style='margin-left: 25px;font-size:10px;' href='${component.docs}' target="_blank">Click for more info!</a>`;
             settingsDict["makeButton"]();
         }
     }
@@ -151,8 +153,8 @@ class Screen {
             this.entities.push(new primitiveDict["rect"](
                 settings["a"].x,
                 settings["a"].y,
-                settings["b"].x,
-                settings["b"].y,
+                settings["c"].x,
+                settings["c"].y,
                 settings["color"],
                 settings["radius"],
                 settings["fill"],
@@ -316,11 +318,11 @@ class Screen {
                     this.display.drawTriangle(e["a"].x, e["a"].y, e["b"].x, e["b"].y, e["c"].x, e["c"].y, e["color"]);
             } else if (e.type == "rect") {
                 if (e.radius && e.fill)
-                    this.display.fillRoundRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["radius"], e["color"]);
+                    this.display.fillRoundRect(e["a"].x, e["a"].y, e["c"].x - e["a"].x, e["c"].y - e["a"].y, e["radius"], e["color"]);
                 else if (e.radius && !e.fill)
-                    this.display.drawRoundRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["radius"], e["color"]);
+                    this.display.drawRoundRect(e["a"].x, e["a"].y, e["c"].x - e["a"].x, e["c"].y - e["a"].y, e["radius"], e["color"]);
                 else if (!e.radius && e.fill)
-                    this.display.fillRect(e["a"].x, e["a"].y, e["b"].x - e["a"].x, e["b"].y - e["a"].y, e["color"]);
+                    this.display.fillRect(e["a"].x, e["a"].y, e["c"].x - e["a"].x, e["c"].y - e["a"].y, e["color"]);
                 else if (!e.radius && !e.fill)
                     this.display.drawRect(e["a"].x, e["a"].y, e["c"].x - e["a"].x, e["c"].y - e["a"].y, e["color"]);
             } else if (e.type == "text") {

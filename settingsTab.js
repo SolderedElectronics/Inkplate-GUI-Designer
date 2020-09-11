@@ -39,15 +39,7 @@ function boolTemplate(name, settings) {
         clone.querySelector(".cname").style.display = "none";
     }
 
-    clone.querySelector(".mainInput").id = name + "_input";
-    clone.querySelector(".mainInput").min = settings.min;
-    clone.querySelector(".mainInput").max = settings.max;
-    clone.querySelector(".mainInput").defaultValue = settings.value || settings.default;
-
-    if (settings.max - settings.min < 10) {
-        clone.querySelector(".mainInput").type = "range";
-        clone.querySelector(".mainInput").step = 1;
-    }
+    clone.querySelector(".mainInput").id = name.replaceAll(" ", "_") + "_input";
 
     if (settings.optional) {
         clone.querySelector(".mainInput").disabled = true;
@@ -106,7 +98,7 @@ function floatTemplate(name, settings) {
         clone.querySelector(".mainCheckbox").style.display = "none";
     }
 
-    clone.querySelector(".mainInput").id = name + "_input";
+    clone.querySelector(".mainInput").id = name.replaceAll(" ", "_") + "_input";
     clone.querySelector(".mainInput").min = settings.min;
     clone.querySelector(".mainInput").max = settings.max;
     clone.querySelector(".mainInput").defaultValue = settings.value || settings.default;
@@ -153,7 +145,7 @@ function textTemplate(name, settings) {
         clone.querySelector(".mainCheckbox").style.display = "none";
     }
 
-    clone.querySelector(".mainInput").id = name + "_text_input";
+    clone.querySelector(".mainInput").id = name.replaceAll(" ", "_") + "_text_input";
     clone.querySelector(".mainInput").defaultValue = settings.value || settings.default;
 
     document.getElementsByClassName("settings")[0].appendChild(clone);
@@ -176,7 +168,7 @@ function textAreaTemplate(name, settings) {
         clone.querySelector(".cname").style.display = "none";
     }
 
-    clone.querySelector(".mainInput").id = name + "_text_input";
+    clone.querySelector(".mainInput").id = name.replaceAll(" ", "_") + "_text_input";
     clone.querySelector(".mainInput").defaultValue = settings.value || settings.default;
 
     document.getElementsByClassName("settings")[0].appendChild(clone);
@@ -197,7 +189,7 @@ function fileTemplate(name, settings) {
         clone.querySelector(".cname").style.display = "none";
     }
 
-    clone.querySelector(".mainInput").id = name + "_input";
+    clone.querySelector(".mainInput").id = name.replaceAll(" ", "_") + "_input";
 
     document.getElementsByClassName("settings")[0].innerHTML += "<br>";
     document.getElementsByClassName("settings")[0].appendChild(clone);
@@ -269,6 +261,10 @@ function inputChanged(el) {
             el => el.type == screen.currentlySelected.type &&
             el.id == screen.currentlySelected.id
         );
+        if (!(el.files[0].type.startsWith("image"))) {
+            alert("Input should be an image!");
+            return;
+        }
         en[name.substring(0, name.indexOf("_input"))] = URL.createObjectURL(el.files[0]);
         en["file"] = new Image();
         en["file"].src = en[name.substring(0, name.indexOf("_input"))];
@@ -278,6 +274,31 @@ function inputChanged(el) {
             screen.currentlySelected.file_name = el.files[0].name;
             screen.editComponent(screen.currentlySelected);
         }
+    } else if ((name.indexOf("width_input") != -1 || name.indexOf("height_input") != -1) &&
+        document.getElementById("Maintain_aspect_ratio_input") &&
+        document.getElementById("Maintain_aspect_ratio_input").checked) {
+
+        let ratio = screen.entities.find(
+                el => el.type == screen.currentlySelected.type &&
+                el.id == screen.currentlySelected.id
+            )["width"] /
+            screen.entities.find(
+                el => el.type == screen.currentlySelected.type &&
+                el.id == screen.currentlySelected.id
+            )["height"];
+
+        screen.entities.find(
+            el => el.type == screen.currentlySelected.type &&
+            el.id == screen.currentlySelected.id
+        )[name.substring(0, name.indexOf("_input"))] = parseFloat(el.value);
+        screen.entities.find(
+            el => el.type == screen.currentlySelected.type &&
+            el.id == screen.currentlySelected.id
+        )[name.substring(0, name.indexOf("_input")) == "width" ? "height" : "width"] = parseInt(
+            name.substring(0, name.indexOf("_input")) == "width" ? parseFloat(el.value) / ratio : parseFloat(el.value) * ratio
+        );
+        screen.editComponent(screen.currentlySelected);
+        document.getElementById("Maintain_aspect_ratio_input").checked = true;
     } else {
         screen.entities.find(
             el => el.type == screen.currentlySelected.type &&
@@ -315,16 +336,16 @@ function updateValues() {
         return;
     for (const [key, value] of Object.entries((new primitiveDict[type]).editable)) {
         if (value.type == "bool") {
-            document.getElementById(key + "_input").checked = screen.currentlySelected[key];
+            document.getElementById(key.replaceAll(" ", "_") + "_input").checked = screen.currentlySelected[key];
         } else if (value.type == "int") {
-            document.getElementById(key + "_input").value = parseInt(screen.currentlySelected[key]);
+            document.getElementById(key.replaceAll(" ", "_") + "_input").value = parseInt(screen.currentlySelected[key]);
         } else if (value.type == "float") {
-            document.getElementById(key + "_input").value = parseFloat(screen.currentlySelected[key]);
+            document.getElementById(key.replaceAll(" ", "_") + "_input").value = parseFloat(screen.currentlySelected[key]);
         } else if (value.type == "coordinate") {
-            document.getElementById(key + "_x_input").value = parseInt(screen.currentlySelected[key].x);
-            document.getElementById(key + "_y_input").value = parseInt(screen.currentlySelected[key].y);
+            document.getElementById(key.replaceAll(" ", "_") + "_x_input").value = parseInt(screen.currentlySelected[key].x);
+            document.getElementById(key.replaceAll(" ", "_") + "_y_input").value = parseInt(screen.currentlySelected[key].y);
         } else if (value.type == "text") {
-            document.getElementById(key + "_text_input").value = screen.currentlySelected[key];
+            document.getElementById(key.replaceAll(" ", "_") + "_text_input").value = screen.currentlySelected[key];
         }
     }
 }
@@ -357,36 +378,36 @@ function addEntity() {
 
     for (const [key, value] of Object.entries((new primitiveDict[type]).editable)) {
         if (value.type == "bool") {
-            if (document.getElementById(key + "_input").style.display == "none")
+            if (document.getElementById(key.replaceAll(" ", "_") + "_input").style.display == "none")
                 settings[key] = null;
             else
-                settings[key] = document.getElementById(key + "_input").checked;
+                settings[key] = document.getElementById(key.replaceAll(" ", "_") + "_input").checked;
         } else if (value.type == "int") {
-            if (document.getElementById(key + "_input").style.display == "none")
+            if (document.getElementById(key.replaceAll(" ", "_") + "_input").style.display == "none")
                 settings[key] = null;
             else
-                settings[key] = parseInt(document.getElementById(key + "_input").value);
+                settings[key] = parseInt(document.getElementById(key.replaceAll(" ", "_") + "_input").value);
         } else if (value.type == "float") {
-            if (document.getElementById(key + "_input").style.display == "none")
+            if (document.getElementById(key.replaceAll(" ", "_") + "_input").style.display == "none")
                 settings[key] = null;
             else
-                settings[key] = parseFloat(document.getElementById(key + "_input").value);
+                settings[key] = parseFloat(document.getElementById(key.replaceAll(" ", "_") + "_input").value);
         } else if (value.type == "coordinate") {
-            if (document.getElementById(key + "_x_input").style.display == "none" || document.getElementById(key + "_y_input").style.display == "none")
+            if (document.getElementById(key.replaceAll(" ", "_") + "_x_input").style.display == "none" || document.getElementById(key + "_y_input").style.display == "none")
                 settings[key] = null;
             else
                 settings[key] = {
-                    x: parseInt(document.getElementById(key + "_x_input").value),
-                    y: parseInt(document.getElementById(key + "_y_input").value),
+                    x: parseInt(document.getElementById(key.replaceAll(" ", "_") + "_x_input").value),
+                    y: parseInt(document.getElementById(key.replaceAll(" ", "_") + "_y_input").value),
                 };
         } else if (value.type == "text") {
-            if (document.getElementById(key + "_text_input").style.display == "none")
+            if (document.getElementById(key.replaceAll(" ", "_") + "_text_input").style.display == "none")
                 settings[key] = null;
             else
-                settings[key] = document.getElementById(key + "_text_input").value
+                settings[key] = document.getElementById(key.replaceAll(" ", "_") + "_text_input").value
         } else if (value.type == "file") {
-            if (document.getElementById(key + "_input").files[0]) {
-                settings[key] = URL.createObjectURL(document.getElementById(key + "_input").files[0]);
+            if (document.getElementById(key.replaceAll(" ", "_") + "_input").files[0]) {
+                settings[key] = URL.createObjectURL(document.getElementById(key.replaceAll(" ", "_") + "_input").files[0]);
                 settings["file"] = new Image();
                 settings["file"].src = settings[key];
             } else {

@@ -45,7 +45,8 @@ class pixel {
     }
     getCCodeVariables() {
         return `int pixel${this.id}_x = ${parseInt(this.location.x)};\n` +
-            `int pixel${this.id}_y = ${parseInt(this.location.y)};\n\n`;
+            `int pixel${this.id}_y = ${parseInt(this.location.y)};\n` +
+            `int pixel${this.id}_color = ${parseInt(this.color.default)};\n\n`;
     }
 
     getCCodeDraw() {
@@ -364,7 +365,7 @@ class rect {
                 },
                 optional: false
             },
-            "b": {
+            "c": {
                 type: "coordinate",
                 default: {
                     x: 700,
@@ -396,8 +397,8 @@ class rect {
     getCCodeVariables() {
         return `int rect${this.id}_a_x = ${parseInt(this.a.x)};\n` +
             `int rect${this.id}_a_y = ${parseInt(this.a.y)};\n` +
-            `int rect${this.id}_b_x = ${parseInt(this.b.x)};\n` +
-            `int rect${this.id}_b_y = ${parseInt(this.b.y)};\n` +
+            `int rect${this.id}_b_x = ${parseInt(this.c.x)};\n` +
+            `int rect${this.id}_b_y = ${parseInt(this.c.y)};\n` +
             `int rect${this.id}_fill = ${this.fill ? "1" : "-1"};\n` +
             `int rect${this.id}_radius = ${this.radius ? this.radius : "-1"};\n` +
             `int rect${this.id}_color = ${this.color || 0};\n\n`;
@@ -742,8 +743,8 @@ class text {
     }
 
     moveDelta(dx, dy) {
-        this["cursor"].x = parseInt(dx);
-        this["cursor"].y = parseInt(dy);
+        this["cursor"].x += parseInt(dx);
+        this["cursor"].y += parseInt(dy);
     }
 }
 
