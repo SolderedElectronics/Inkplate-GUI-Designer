@@ -46,7 +46,7 @@ class pixel {
     getCCodeVariables() {
         return `int pixel${this.id}_x = ${parseInt(this.location.x)};\n` +
             `int pixel${this.id}_y = ${parseInt(this.location.y)};\n` +
-            `int pixel${this.id}_color = ${parseInt(this.color.default)};\n\n`;
+            `int pixel${this.id}_color = ${parseInt(this.color)};\n\n`;
     }
 
     getCCodeDraw() {
@@ -692,14 +692,14 @@ class text {
     }
 
     getIncludes() {
-        return `#include "Fonts/${this.font}.h"\n`;
+        return `#include "Fonts/${this.font.substr(this.font.indexOf(' ') + 1)}.h"\n`;
     }
 
     getCCodeVariables() {
         return `String text${this.id}_content = "${this.content}";\n` +
             `int text${this.id}_cursor_x = ${parseInt(this.cursor.x)};\n` +
             `int text${this.id}_cursor_y = ${parseInt(this.cursor.y)};\n` +
-            `const GFXfont *text${this.id}_font = &${this.font};\n\n`;
+            `const GFXfont *text${this.id}_font = &${this.font.substr(this.font.indexOf(' ') + 1)};\n\n`;
     }
 
     getCCodeDraw() {
@@ -914,8 +914,8 @@ class bitmap {
     }
 
     moveDelta(dx, dy) {
-        this["corner"].x = parseInt(dx);
-        this["corner"].y = parseInt(dy);
+        this["corner"].x += parseInt(dx);
+        this["corner"].y += parseInt(dy);
     }
 }
 
