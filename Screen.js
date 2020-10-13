@@ -61,7 +61,7 @@ class Screen {
                 optional: false
             });
             console.log(component)
-            document.getElementsByClassName("settings")[0].innerHTML += `<a style='margin-left: 25px;font-size:10px;' href='${component.infoLink.url}' target="_blank">Click for more info!</a>`;
+            document.getElementsByClassName("settings")[1].innerHTML += `<a href='${component.infoLink.url}' target="_blank">Click for more info!</a>`;
             settingsDict["makeButton"]();
             //this.entities.push(widget);
         } else {
@@ -78,7 +78,7 @@ class Screen {
                 });
             }
 
-            document.getElementsByClassName("settings")[0].innerHTML += `<a style='margin-left: 25px;font-size:10px;' href='${component.docs}' target="_blank">Click for more info!</a>`;
+            document.getElementsByClassName("settings")[1].innerHTML += `<a href='${component.docs}' target="_blank">Click for more info!</a>`;
             settingsDict["makeButton"]();
         }
     }
@@ -98,7 +98,7 @@ class Screen {
             settingsDict[value.type](key, value);
         }
 
-        document.getElementsByClassName("settings")[0].innerHTML += `<a style='margin-left: 25px;font-size:10px' href='${(new primitiveDict[component]).docs}'>Click for more info!</a>`;
+        document.getElementsByClassName("settings")[1].innerHTML += `<a href='${(new primitiveDict[component]).docs}'>Click for more info!</a>`;
         settingsDict["makeButton"]();
         refreshEntitiesScroll();
     }

@@ -9,23 +9,16 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link href="style.css" rel="stylesheet" />
   </head>
   <body>
     <div class="wrapper">
       <div class="header">
-        <div class="dropdown" style="margin-left: 10px; margin-right: 10px">
-          <b style="color: white">Inkplate user interface designer &nbsp; </b>
-          <div
-            class="btn btn-secondary"
-            style="
-              padding-bottom: 1px;
-              padding-top: 1px;
-              padding-left: 5px;
-              padding-right: 5px;
-              background-color: #aaaaaa;
-              height: 27px;
-            "
-          >
+        <div class="dropdown">
+          <h1>Inkplate user<br class="resize-br-4"/>interface designer</h1>
+
+          <!--
+          <div class="dropdown-version">
             <label for="sel1">Inkplate version:</label>
             <select
               id="sel1"
@@ -44,175 +37,59 @@
               <option>Inkplate 10</option>
             </select>
           </div>
-          &nbsp;
-          <label
-            for="magnet"
-            class="btn btn-secondary"
-            style="
-              padding-bottom: 1px;
-              padding-top: 1px;
-              margin: 1px;
-              background-color: #aaaaaa;
-            "
-          >
-            <input
-              type="checkbox"
-              aria-describedby="inputGroup-sizing-sm"
-              style="height: 16px"
-              id="magnet"
-            />
-            Magnet clipping
-          </label>
-          &nbsp;
-          <button
-            class="btn btn-primary"
-            type="button"
-            onclick="fileTab.exportC()"
-            style="
-              padding-bottom: 1px;
-              padding-top: 1px;
-              background-color: #aaaaaa;
-            "
-          >
-            Export Arduino Code
-          </button>
+        -->
 
-          <button
-            class="btn btn-primary float-right"
-            type="button"
-            onclick="fileTab.save()"
-            style="
-              padding-bottom: 1px;
-              padding-top: 1px;
-              margin: 1px;
-              margin-right: 5px;
-              margin-top: 3px;
-              background-color: #aaaaaa;
-            "
-          >
-            Save
-          </button>
-
-          <button
-            class="btn btn-secondary float-right"
-            type="button"
-            onclick="fileTab.load()"
-            style="
-              padding-bottom: 1px;
-              padding-top: 1px;
-              margin: 1px;
-              margin-right: 5px;
-              margin-top: 3px;
-              background-color: #aaaaaa;
-            "
-          >
-            Load
-          </button>
+            <br class="resize-br-2"/>
+            <div class="input-group input-group-sm dropdown-version">
+                <div class="input-group-prepend">
+                    <span class="input-group-text inputText" id="inputGroup-sizing-sm">
+                        <span class="name">Inkplate version</span>
+                    </span>
+                </div>
+                <select id="sel1" onchange="changeInkplate()">
+                      <option selected>Inkplate 6</option>
+                      <option>Inkplate 6+</option>
+                      <option>Inkplate 10</option>
+                </select>
+            </div>
+            <br class="resize-br-1"/>
+            <label for="magnet" class="btn btn-secondary dropdown-button dropdown-button-resize-br1 dropdown-button-check dropdown-first">
+                <input class="dropdown-checkbox" type="checkbox" aria-describedby="inputGroup-sizing-sm" id="magnet"/>
+                Magnet clipping
+            </label>
+            <button class="btn btn-secondary dropdown-button dropdown-button-resize-br1" type="button" onclick="fileTab.exportC()">Export Arduino Code</button>
+            <br class="resize-br-3"/>
+            <button class="btn btn-secondary dropdown-button dropdown-button-right float-right" type="button" onclick="fileTab.save()">Save</button>
+            <button class="btn btn-secondary dropdown-button dropdown-button-right float-right" type="button" onclick="fileTab.load()">Load</button>
         </div>
       </div>
 
       <div class="content">
         <div class="components shadow rounded">
-          <div class="scrollWrap" style="margin: 0; width: 100%">
-            <div
-              class="list-group"
-              style="font-size: 16px; padding: 0; margin: 0; position: relative"
-            >
-              <h5
-                class="primitiveItem list-group-item"
-                style="background-color: #aaaaaa"
-              >
-                Primitives
-              </h5>
-
-              <button
-                class="list-group-item list-group-item-action primitiveItem"
-                onclick="selectComponent('pixel')"
-              >
-                Pixel
-              </button>
-
-              <button
-                class="list-group-item list-group-item-action primitiveItem"
-                onclick="selectComponent('line')"
-              >
-                Line
-              </button>
-
-              <button
-                class="list-group-item list-group-item-action primitiveItem"
-                onclick="selectComponent('rect')"
-              >
-                Rectangle
-              </button>
-
-              <button
-                class="list-group-item list-group-item-action primitiveItem"
-                onclick="selectComponent('circle')"
-              >
-                Circle
-              </button>
-
-              <button
-                class="list-group-item list-group-item-action primitiveItem"
-                onclick="selectComponent('triangle')"
-              >
-                Triangle
-              </button>
-
-              <button
-                class="list-group-item list-group-item-action primitiveItem"
-                onclick="selectComponent('text')"
-              >
-                Text
-              </button>
-
-              <button
-                class="list-group-item list-group-item-action primitiveItem"
-                onclick="selectComponent('bitmap')"
-              >
-                Bitmap
-              </button>
-
-              <hr />
-              <h5
-                class="primitiveItem list-group-item"
-                style="background-color: #aaaaaa"
-              >
-                Widgets
-              </h5>
-
-              <div id="widgets"></div>
-
-              <hr />
-
-              <div style="position: absolute; bottom: 0px; width: 100%">
-                <h5
-                  class="primitiveItem list-group-item"
-                  style="background-color: #aaaaaa"
-                >
-                  Entities
-                </h5>
-                <div
-                  class="list-group"
-                  style="
-                    max-height: 150px;
-                    margin-bottom: 10px;
-                    overflow: scroll;
-                    direction: ltr;
-                    background-color: #cccccc;
-                  "
-                  id="entities_list"
-                >
-                  <button
-                    class="list-group-item list-group-item-action primitiveItem"
-                    style="background-color: #cccccc"
-                    onclick="screen.editComponent(screen.entities[0])"
-                  >
-                    Text0
-                  </button>
+          <div class="scrollWrap">
+            <div class="list-group">
+                <div class="list-group-set">
+                    <h5 class="primitiveItem list-group-item">Primitives</h5>
+                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('pixel')">Pixel</button>
+                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('line')">Line</button>
+                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('rect')">Rectangle</button>
+                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('circle')">Circle</button>
+                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('triangle')">Triangle</button>
+                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('text')">Text</button>
+                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('bitmap')">Bitmap</button>
                 </div>
-              </div>
+
+                <div class="list-group-set">
+                    <h5 class="primitiveItem list-group-item">Widgets</h5>
+                    <div id="widgets"></div>
+                </div>
+
+                <div class="list-group-bottom">
+                    <h5 class="primitiveItem list-group-item">Entities</h5>
+                    <div class="list-group-bottom-inner" id="entities_list">
+                        <button class="list-group-item list-group-item-action primitiveItem" onclick="screen.editComponent(screen.entities[0])">Text0</button>
+                    </div>
+                </div>
             </div>
           </div>
         </div>
@@ -223,46 +100,33 @@
         >
           <canvas style="width: 100%; height: 100%" id="canvas"></canvas>
         </div>
-        <div class="settings shadow rounded">a</div>
+        <div class="settings-outer">
+            <div class="settings settings-box"></div>           
+        </div>
       </div>
 
-      <div class="footer shadow" style="width: 100%">
-        <span style="float: right; padding-right: 10px">
+      <div class="footer shadow">
+        <span class="footer-left">
           Made by
-          <a
-            href="https://e-radionica.com/"
-            style="color: #cccccc"
-            target="_blank"
-            >e-radionica.com</a
-          ></span
-        >
-
-        <span style="float: center; padding-left: 10px">
-          Work in progress, please
-          <a
-            href="https://github.com/e-radionicacom/Inkplate-GUI-Designer/issues"
-            target="_blank"
-            style="color: #aaaaaa"
-            >report
-          </a>
-          all issues
+          <a href="https://e-radionica.com/" target="_blank">e-radionica.com</a>
         </span>
 
-        <span style="float: left; padding-left: 10px">
+        <span class="footer-center">
+          Work in progress, please
+          <a href="https://github.com/e-radionicacom/Inkplate-GUI-Designer/issues" target="_blank">report</a>
+          all issues.
+        </span>
+
+        <span class="footer-right">
           Open Source Software:
-          <a
-            href="https://github.com/e-radionicacom/Inkplate-GUI-Designer"
-            target="_blank"
-            style="color: #aaaaaa"
-            >Github Repo</a
-          >
+          <a href="https://github.com/e-radionicacom/Inkplate-GUI-Designer" target="_blank">GitHub Repo</a>
         </span>
       </div>
     </div>
 
     <template id="headingTemplate">
       <h3 id="content">aaa</h3>
-      <hr />
+      <div class="settings settings-inner"></div>
     </template>
 
     <template id="boolTemplate">
@@ -271,7 +135,7 @@
           <span class="input-group-text inputText" id="inputGroup-sizing-sm">
             <input
               type="checkbox"
-              aria-label="Small"
+              aria-label="Checkbox"
               aria-describedby="inputGroup-sizing-sm"
               class="mainCheckbox"
               onclick="changeCheckbox(this)"
@@ -283,13 +147,13 @@
         <input
           type="checkbox"
           class="form-control inputElement mainInput"
-          aria-label="Small"
+          aria-label="Checkbox"
           aria-describedby="inputGroup-sizing-sm"
           onchange="inputChanged(this)"
         />
       </div>
       <div style="width: 100%; padding-bottom: 0px">
-        <p class="cname text-right" style="font-size: 10px; padding: 2px">
+        <p class="cname text-right" style="font-size: 8pt; padding: 2px">
           test
         </p>
       </div>
@@ -301,7 +165,7 @@
           <span class="input-group-text inputText" id="inputGroup-sizing-sm">
             <input
               type="checkbox"
-              aria-label="Small"
+              aria-label="Integer"
               aria-describedby="inputGroup-sizing-sm"
               class="mainCheckbox"
               onclick="changeCheckbox(this)"
@@ -313,7 +177,7 @@
         <input
           type="text"
           class="form-control inputElement mainInput"
-          aria-label="Small"
+          aria-label="Integer"
           aria-describedby="inputGroup-sizing-sm"
           onchange="inputChanged(this)"
         />
@@ -321,7 +185,7 @@
       <div style="width: 100%">
         <p
           class="cname text-right"
-          style="font-size: 10px; margin-bottom: 2px; padding: 2px"
+          style="font-size: 8pt; margin-bottom: 2px; padding: 2px"
         >
           test
         </p>
@@ -334,7 +198,7 @@
           <span class="input-group-text inputText" id="inputGroup-sizing-sm">
             <input
               type="checkbox"
-              aria-label="Small"
+              aria-label="Float"
               aria-describedby="inputGroup-sizing-sm"
               class="mainCheckbox"
               onclick="changeCheckbox(this)"
@@ -346,7 +210,7 @@
         <input
           type="text"
           class="form-control inputElement mainInput"
-          aria-label="Small"
+          aria-label="Float"
           aria-describedby="inputGroup-sizing-sm"
           onchange="inputChanged(this)"
         />
@@ -354,7 +218,7 @@
       <div style="width: 100%">
         <p
           class="cname text-right"
-          style="font-size: 10px; margin-bottom: 2px; padding: 2px"
+          style="font-size: 8pt; margin-bottom: 2px; padding: 2px"
         >
           test
         </p>
@@ -367,7 +231,7 @@
           <span class="input-group-text inputText" id="inputGroup-sizing-sm">
             <input
               type="checkbox"
-              aria-label="Small"
+              aria-label="Text"
               aria-describedby="inputGroup-sizing-sm"
               class="mainCheckbox"
               onclick="changeCheckbox(this)"
@@ -379,13 +243,13 @@
         <input
           type="text"
           class="form-control inputElement mainInput"
-          aria-label="Small"
+          aria-label="Text"
           aria-describedby="inputGroup-sizing-sm"
           onchange="inputChanged(this)"
         />
       </div>
       <div style="width: 100%">
-        <p class="cname text-right" style="font-size: 10px; padding: 2px">
+        <p class="cname text-right" style="font-size: 8pt; padding: 2px">
           test
         </p>
       </div>
@@ -397,25 +261,25 @@
           <span class="input-group-text inputText" id="inputGroup-sizing-sm">
             <input
               type="checkbox"
-              aria-label="Small"
+              aria-label="File"
               aria-describedby="inputGroup-sizing-sm"
               class="mainCheckbox"
               onclick="changeCheckbox(this)"
             />
             &nbsp;
-            <span class="name"></span>
+            <span class="name">File</span>
           </span>
         </div>
         <input
           type="file"
-          class="form-control inputElement mainInput"
-          aria-label="Small"
+          class="form-control inputElement mainInput btn-file"
+          aria-label="File"
           aria-describedby="inputGroup-sizing-sm"
           onchange="inputChanged(this)"
         />
       </div>
       <div style="width: 100%">
-        <p class="cname text-right" style="font-size: 10px; padding: 2px">
+        <p class="cname text-right" style="font-size: 8pt; padding: 2px">
           test
         </p>
       </div>
@@ -423,11 +287,11 @@
 
     <template id="textAreaTemplate">
       <div class="input-group input-group-sm">
-        <div class="input-group">
-          <span class="input-group-text inputText" id="inputGroup-sizing-sm">
+        <div class="input-group variables-edit-title">
+          <span class="input-group-text inputText variables-edit-text" id="inputGroup-sizing-sm">
             <textarea
               type="checkbox"
-              aria-label="Small"
+              aria-label="Text Area"
               aria-describedby="inputGroup-sizing-sm"
               class="mainCheckbox"
               onclick="changeCheckbox(this)"
@@ -440,13 +304,13 @@
           style="height: 400px"
           type="text"
           class="form-control inputElement mainInput"
-          aria-label="Small"
+          aria-label="Text Area"
           aria-describedby="inputGroup-sizing-sm"
           onchange="widgetChanged(this)"
         ></textarea>
       </div>
       <div style="width: 100%">
-        <p class="cname text-right" style="font-size: 10px; padding: 2px">
+        <p class="cname text-right" style="font-size: 8pt; padding: 2px">
           test
         </p>
       </div>
@@ -456,13 +320,13 @@
       <div class="input-group input-group-sm">
         <button
           type="text"
-          class="form-control"
-          aria-label="Small"
+          class="form-control btn-create"
+          aria-label="Create Entity"
           aria-describedby="inputGroup-sizing-sm"
           onclick="addEntity()"
           id="desc"
         >
-          Make entity
+          Create Entity
         </button>
       </div>
     </template>

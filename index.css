@@ -68,9 +68,3 @@ body {
 .screen {
     flex: 1
 }
-
-.settings {
-    width: 200px;
-    background-color: #cccccc;
-    position: relative;
-}

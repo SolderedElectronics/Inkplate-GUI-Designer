@@ -47,7 +47,7 @@ function boolTemplate(name, settings) {
         clone.querySelector(".mainCheckbox").style.display = "none";
     }
 
-    document.getElementsByClassName("settings")[0].appendChild(clone);
+    document.getElementsByClassName("settings")[1].appendChild(clone);
 }
 
 function intTemplate(name, settings) {
@@ -78,7 +78,7 @@ function intTemplate(name, settings) {
         clone.querySelector(".mainCheckbox").style.display = "none";
     }
 
-    document.getElementsByClassName("settings")[0].appendChild(clone);
+    document.getElementsByClassName("settings")[1].appendChild(clone);
 }
 
 function floatTemplate(name, settings) {
@@ -107,7 +107,7 @@ function floatTemplate(name, settings) {
         clone.querySelector(".mainInput").type = "range";
     }
 
-    document.getElementsByClassName("settings")[0].appendChild(clone);
+    document.getElementsByClassName("settings")[1].appendChild(clone);
 }
 
 function coordinateTemplate(name, settings) {
@@ -125,7 +125,7 @@ function coordinateTemplate(name, settings) {
         default: settings.default.y,
         value: settings.value ? settings.value.y : null
     });
-    document.getElementsByClassName("settings")[0].innerHTML += "<br>";
+    document.getElementsByClassName("settings")[1].innerHTML += "<hr>";
 }
 
 function textTemplate(name, settings) {
@@ -148,7 +148,7 @@ function textTemplate(name, settings) {
     clone.querySelector(".mainInput").id = name.replaceAll(" ", "_") + "_text_input";
     clone.querySelector(".mainInput").defaultValue = settings.value || settings.default;
 
-    document.getElementsByClassName("settings")[0].appendChild(clone);
+    document.getElementsByClassName("settings")[1].appendChild(clone);
 }
 
 function textAreaTemplate(name, settings) {
@@ -171,7 +171,7 @@ function textAreaTemplate(name, settings) {
     clone.querySelector(".mainInput").id = name.replaceAll(" ", "_") + "_text_input";
     clone.querySelector(".mainInput").defaultValue = settings.value || settings.default;
 
-    document.getElementsByClassName("settings")[0].appendChild(clone);
+    document.getElementsByClassName("settings")[1].appendChild(clone);
 }
 
 function fileTemplate(name, settings) {
@@ -191,20 +191,23 @@ function fileTemplate(name, settings) {
 
     clone.querySelector(".mainInput").id = name.replaceAll(" ", "_") + "_input";
 
-    document.getElementsByClassName("settings")[0].innerHTML += "<br>";
-    document.getElementsByClassName("settings")[0].appendChild(clone);
+    document.getElementsByClassName("settings")[1].innerHTML += "<hr>";
+    document.getElementsByClassName("settings")[1].appendChild(clone);
 }
 
 function makeButton() {
     let clone = document.getElementById("buttonTemplate").content.cloneNode(true);
 
     if (document.getElementsByClassName("settings")[0].querySelector("#content").innerHTML.startsWith("Editing")) {
+        clone.querySelector("#desc").classList.add("btn");
+        clone.querySelector("#desc").classList.add("btn-danger");
+        clone.querySelector("#desc").classList.remove("btn-create");
         clone.querySelector("#desc").innerHTML = "Remove";
-        clone.querySelector("#desc").style.color = "white";
-        clone.querySelector("#desc").style.backgroundColor = "red";
+        //clone.querySelector("#desc").style.color = "white";
+        //clone.querySelector("#desc").style.backgroundColor = "red";
     }
-    document.getElementsByClassName("settings")[0].innerHTML += "<br>";
-    document.getElementsByClassName("settings")[0].appendChild(clone);
+    document.getElementsByClassName("settings")[1].innerHTML += "<hr>";
+    document.getElementsByClassName("settings")[1].appendChild(clone);
 }
 
 
