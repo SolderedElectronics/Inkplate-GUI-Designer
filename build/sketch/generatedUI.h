@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "Inkplate.h"
-#include "Fonts/FreeSansBold24pt7b.h"
+#include "res/Fonts/FreeSansBold24pt7b.h"
 
 extern Inkplate display;
 
