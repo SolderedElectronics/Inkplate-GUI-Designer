@@ -192,7 +192,7 @@ let graph = {
             `       widget${this.id}_prev_y = ty;\n` +
             `   }\n` +
             `\n` +
-            `   for (int i = 0; i < 4; ++i) {\n` +
+            `   for (int i = 0; i < 4; ++i) { display.setFont();\n` +
             `       display.drawFastHLine(widget${this.id}_corner1_x, widget${this.id}_corner2_y + i * (widget${this.id}_corner1_y - widget${this.id}_corner2_y) / 4, widget${this.id}_corner2_x - widget${this.id}_corner1_x, 4);\n` +
             `       display.setCursor(widget${this.id}_corner2_x - widget${this.id}_textMargin + 10, widget${this.id}_corner1_y + (4 - i) * (widget${this.id}_corner2_y - widget${this.id}_corner1_y) / 4 + 23);\n` +
             `       display.setTextColor(0, 7);\n` +
