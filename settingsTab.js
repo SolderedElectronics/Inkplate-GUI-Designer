@@ -244,11 +244,35 @@ function inputChanged(el) {
             el => el.type == screen.currentlySelected.type &&
             el.id == screen.currentlySelected.id
         )[name.substring(0, name.indexOf("_x_input"))].x = parseInt(el.value);
+        if (screen.currentlySelected.type == "rect") {
+            if (name.substring(0, name.indexOf("_x_input")) == "a")
+                screen.entities.find(
+                    el => el.type == screen.currentlySelected.type &&
+                    el.id == screen.currentlySelected.id
+                )["b"].x = parseInt(el.value);
+            if (name.substring(0, name.indexOf("_x_input")) == "c")
+                screen.entities.find(
+                    el => el.type == screen.currentlySelected.type &&
+                    el.id == screen.currentlySelected.id
+                )["d"].x = parseInt(el.value);
+        }
     } else if (name.indexOf("_y_input") != -1) {
         screen.entities.find(
             el => el.type == screen.currentlySelected.type &&
             el.id == screen.currentlySelected.id
         )[name.substring(0, name.indexOf("_y_input"))].y = parseInt(el.value);
+        if (screen.currentlySelected.type == "rect") {
+            if (name.substring(0, name.indexOf("_y_input")) == "a")
+                screen.entities.find(
+                    el => el.type == screen.currentlySelected.type &&
+                    el.id == screen.currentlySelected.id
+                )["d"].y = parseInt(el.value);
+            if (name.substring(0, name.indexOf("_y_input")) == "c")
+                screen.entities.find(
+                    el => el.type == screen.currentlySelected.type &&
+                    el.id == screen.currentlySelected.id
+                )["b"].y = parseInt(el.value);
+        }
     } else if (el.type == "checkbox") {
         screen.entities.find(
             el => el.type == screen.currentlySelected.type &&
