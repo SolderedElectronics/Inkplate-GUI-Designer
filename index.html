@@ -15,7 +15,7 @@
     <div class="wrapper">
       <div class="header">
         <div class="dropdown">
-          <h1>Inkplate User <br class="resize-br-4"/>Interface Designer</h1>
+          <h1>Inkplate User <br class="resize-br-4" />Interface Designer</h1>
 
           <!--
           <div class="dropdown-version">
@@ -39,28 +39,59 @@
           </div>
         -->
 
-            <br class="resize-br-2"/>
-            <div class="input-group input-group-sm dropdown-version">
-                <div class="input-group-prepend">
-                    <span class="input-group-text inputText" id="inputGroup-sizing-sm">
-                        <span class="name">Inkplate version</span>
-                    </span>
-                </div>
-                <select id="sel1" onchange="changeInkplate()">
-                      <option selected>Inkplate 6</option>
-                      <option>Inkplate 6+</option>
-                      <option>Inkplate 10</option>
-                </select>
+          <br class="resize-br-2" />
+          <div class="input-group input-group-sm dropdown-version">
+            <div class="input-group-prepend">
+              <span
+                class="input-group-text inputText"
+                id="inputGroup-sizing-sm"
+              >
+                <span class="name">Inkplate version</span>
+              </span>
             </div>
-            <br class="resize-br-1"/>
-            <label for="magnet" class="btn btn-secondary dropdown-button dropdown-button-resize-br1 dropdown-button-check dropdown-first">
-                <input class="dropdown-checkbox" type="checkbox" aria-describedby="inputGroup-sizing-sm" id="magnet"/>
-                Magnet clipping
-            </label>
-            <button class="btn btn-secondary dropdown-button dropdown-button-resize-br1" type="button" onclick="fileTab.exportC()">Export Arduino Code</button>
-            <br class="resize-br-3"/>
-            <button class="btn btn-secondary dropdown-button dropdown-button-right float-right" type="button" onclick="fileTab.save()">Save</button>
-            <button class="btn btn-secondary dropdown-button dropdown-button-right float-right" type="button" onclick="fileTab.load()">Load</button>
+            <select id="sel1" onchange="changeInkplate()">
+              <option selected>Inkplate 6</option>
+              <option>Inkplate 6+</option>
+              <option>Inkplate 10</option>
+              <option>Inkplate 5</option>
+              <option>Inkplate Color</option>
+            </select>
+          </div>
+          <br class="resize-br-1" />
+          <label
+            for="magnet"
+            class="btn btn-secondary dropdown-button dropdown-button-resize-br1 dropdown-button-check dropdown-first"
+          >
+            <input
+              class="dropdown-checkbox"
+              type="checkbox"
+              aria-describedby="inputGroup-sizing-sm"
+              id="magnet"
+            />
+            Magnet clipping
+          </label>
+          <button
+            class="btn btn-secondary dropdown-button dropdown-button-resize-br1"
+            type="button"
+            onclick="fileTab.exportC()"
+          >
+            Export Arduino Code
+          </button>
+          <br class="resize-br-3" />
+          <button
+            class="btn btn-secondary dropdown-button dropdown-button-right float-right"
+            type="button"
+            onclick="fileTab.save()"
+          >
+            Save
+          </button>
+          <button
+            class="btn btn-secondary dropdown-button dropdown-button-right float-right"
+            type="button"
+            onclick="fileTab.load()"
+          >
+            Load
+          </button>
         </div>
       </div>
 
@@ -68,28 +99,68 @@
         <div class="components shadow rounded">
           <div class="scrollWrap">
             <div class="list-group">
-                <div class="list-group-set">
-                    <h5 class="primitiveItem list-group-item">Primitives</h5>
-                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('pixel')">Pixel</button>
-                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('line')">Line</button>
-                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('rect')">Rectangle</button>
-                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('circle')">Circle</button>
-                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('triangle')">Triangle</button>
-                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('text')">Text</button>
-                    <button class="list-group-item list-group-item-action primitiveItem" onclick="selectComponent('bitmap')">Bitmap</button>
-                </div>
+              <div class="list-group-set">
+                <h5 class="primitiveItem list-group-item">Primitives</h5>
+                <button
+                  class="list-group-item list-group-item-action primitiveItem"
+                  onclick="selectComponent('pixel')"
+                >
+                  Pixel
+                </button>
+                <button
+                  class="list-group-item list-group-item-action primitiveItem"
+                  onclick="selectComponent('line')"
+                >
+                  Line
+                </button>
+                <button
+                  class="list-group-item list-group-item-action primitiveItem"
+                  onclick="selectComponent('rect')"
+                >
+                  Rectangle
+                </button>
+                <button
+                  class="list-group-item list-group-item-action primitiveItem"
+                  onclick="selectComponent('circle')"
+                >
+                  Circle
+                </button>
+                <button
+                  class="list-group-item list-group-item-action primitiveItem"
+                  onclick="selectComponent('triangle')"
+                >
+                  Triangle
+                </button>
+                <button
+                  class="list-group-item list-group-item-action primitiveItem"
+                  onclick="selectComponent('text')"
+                >
+                  Text
+                </button>
+                <button
+                  class="list-group-item list-group-item-action primitiveItem"
+                  onclick="selectComponent('bitmap')"
+                >
+                  Bitmap
+                </button>
+              </div>
 
-                <div class="list-group-set">
-                    <h5 class="primitiveItem list-group-item">Widgets</h5>
-                    <div id="widgets"></div>
-                </div>
+              <div class="list-group-set">
+                <h5 class="primitiveItem list-group-item">Widgets</h5>
+                <div id="widgets"></div>
+              </div>
 
-                <div class="list-group-set">
-                    <h5 class="primitiveItem list-group-item">Entities</h5>
-                    <div class="list-group-bottom-inner" id="entities_list">
-                        <button class="list-group-item list-group-item-action primitiveItem" onclick="screen.editComponent(screen.entities[0])">Text0</button>
-                    </div>
+              <div class="list-group-set">
+                <h5 class="primitiveItem list-group-item">Entities</h5>
+                <div class="list-group-bottom-inner" id="entities_list">
+                  <button
+                    class="list-group-item list-group-item-action primitiveItem"
+                    onclick="screen.editComponent(screen.entities[0])"
+                  >
+                    Text0
+                  </button>
                 </div>
+              </div>
             </div>
           </div>
         </div>
@@ -101,7 +172,7 @@
           <canvas style="width: 100%; height: 100%" id="canvas"></canvas>
         </div>
         <div class="settings-outer">
-            <div class="settings settings-box"></div>           
+          <div class="settings settings-box"></div>
         </div>
       </div>
 
@@ -113,13 +184,21 @@
 
         <span class="footer-center">
           Work in progress, please
-          <a href="https://github.com/e-radionicacom/Inkplate-GUI-Designer/issues" target="_blank">report</a>
+          <a
+            href="https://github.com/e-radionicacom/Inkplate-GUI-Designer/issues"
+            target="_blank"
+            >report</a
+          >
           all issues.
         </span>
 
         <span class="footer-right">
           Open Source Software:
-          <a href="https://github.com/e-radionicacom/Inkplate-GUI-Designer" target="_blank">GitHub Repo</a>
+          <a
+            href="https://github.com/e-radionicacom/Inkplate-GUI-Designer"
+            target="_blank"
+            >GitHub Repo</a
+          >
         </span>
       </div>
     </div>
@@ -288,7 +367,10 @@
     <template id="textAreaTemplate">
       <div class="input-group input-group-sm">
         <div class="input-group variables-edit-title">
-          <span class="input-group-text inputText variables-edit-text" id="inputGroup-sizing-sm">
+          <span
+            class="input-group-text inputText variables-edit-text"
+            id="inputGroup-sizing-sm"
+          >
             <textarea
               type="checkbox"
               aria-label="Text Area"

@@ -11,6 +11,12 @@ function changeInkplate() {
     } else if (document.getElementById("sel1").value == "Inkplate 10") {
         globalW = 1200;
         globalH = 825;
+    } else if (document.getElementById("sel1").value == "Inkplate 5") {
+        globalW = 800;
+        globalH = 600;
+    } else if (document.getElementById("sel1").value == "Inkplate Color") {
+        globalW = 600;
+        globalH = 448;
     }
 
     screen.ui.width = globalW;
