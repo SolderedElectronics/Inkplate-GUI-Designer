@@ -41,7 +41,7 @@ class Screen {
             //new rect(0, 0, 100, 100, 0, false, 0, false),
             //new circle(100, 100, 50, 4, true),
             //new triangle(0, 0, 100, 100, 100, 0, 5, true),
-            new text(300, 290, "Hello there!", "24px FreeSansBold24pt7b", 0)
+            new text(300, 290, "Hello there!", "FreeSansBold24pt7b", 0)
         ];
 
         this.editComponent(this.entities[0]);
@@ -326,8 +326,8 @@ class Screen {
                 else if (!e.radius && !e.fill)
                     this.display.drawRect(e["a"].x, e["a"].y, e["c"].x - e["a"].x, e["c"].y - e["a"].y, e["color"]);
             } else if (e.type == "text") {
-                this.display.setFont(e["font"]);
-                this.display.setFontSize(e["size"]);
+                this.display.setFont(e.getFontFamily());
+                this.display.setFontSize(e.getFontSize());
                 this.display.setFontColor(e["color"]);
                 this.display.setCursor(e["cursor"].x, e["cursor"].y);
                 this.display.print(e["content"]);

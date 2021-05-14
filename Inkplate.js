@@ -32,10 +32,6 @@ class Inkplate {
         return this.yOffset + this.outline + y * (600 / globalH);
     }
 
-    setFontSize(s) {
-        this.fontSize = s;
-    }
-
     drawOutline() {
         let _width = this.width + 2 * this.outline;
         let _height = this.height + 2 * this.outline;
@@ -316,6 +312,12 @@ class Inkplate {
         this.font = font;
     }
 
+    setFontSize(s) {
+        // Set the font size for `s` in points (1/72")
+        // This constant is tuned for the inkplate 6
+        this.fontSize = s * 3.1389;
+    }
+
     setCursor(x, y) {
         this.cursor.x = this.scaleX(x);
         this.cursor.y = this.scaleY(y);
@@ -323,7 +325,8 @@ class Inkplate {
 
     print(text) {
         this.ctx.fillStyle = `rgb(${this.color << 5}, ${this.color << 5}, ${this.color << 5})`;
-        this.ctx.font = parseInt(this.fontSize) + "px Arial";
+        // TODO: Print using a custom font here
+        this.ctx.font = parseInt(this.fontSize) + "px " + this.font;
 
         let maxWidth = globalW - this.cursor.x + this.outline;
 
