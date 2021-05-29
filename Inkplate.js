@@ -3,8 +3,6 @@ class Inkplate {
         this.ctx = ctx;
         this.canvas = canvas;
 
-        this.scale = 1.0;
-
         this.xOffset = 0;
         this.yOffset = 0;
 
@@ -12,6 +10,7 @@ class Inkplate {
 
         this.width = globalW;
         this.height = globalH;
+        this.dpi = globalDPI;
 
         this.cursor = {
             x: 0,
@@ -20,7 +19,6 @@ class Inkplate {
 
         this.color = 0;
 
-        this.fontSize = "32px";
         this.font = "FreeSansBold24pt7b";
     }
 
@@ -313,9 +311,8 @@ class Inkplate {
     }
 
     setFontSize(s) {
-        // Set the font size for `s` in points (1/72")
-        // This constant is tuned for the inkplate 6
-        this.fontSize = s * 3.1389;
+        // Set the font size in pixels given `s` in points (1/72")
+        this.fontSize = s * (this.dpi / 72);
     }
 
     setCursor(x, y) {
@@ -325,7 +322,6 @@ class Inkplate {
 
     print(text) {
         this.ctx.fillStyle = `rgb(${this.color << 5}, ${this.color << 5}, ${this.color << 5})`;
-        // TODO: Print using a custom font here
         this.ctx.font = parseInt(this.fontSize) + "px " + this.font;
 
         let maxWidth = globalW - this.cursor.x + this.outline;

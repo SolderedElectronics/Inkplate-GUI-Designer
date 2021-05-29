@@ -1,22 +1,28 @@
 let globalW = 800;
 let globalH = 600;
+let globalDPI = 167;
 
 function changeInkplate() {
     if (document.getElementById("sel1").value == "Inkplate 6") {
         globalW = 800;
         globalH = 600;
+        globalDPI = 167;
     } else if (document.getElementById("sel1").value == "Inkplate 6+") {
         globalW = 1024;
         globalH = 758;
+        globalDPI = 212;
     } else if (document.getElementById("sel1").value == "Inkplate 10") {
         globalW = 1200;
         globalH = 825;
+        globalDPI = 150;
     } else if (document.getElementById("sel1").value == "Inkplate 5") {
         globalW = 800;
         globalH = 600;
+        globalDPI = 167;
     } else if (document.getElementById("sel1").value == "Inkplate Color") {
         globalW = 600;
         globalH = 448;
+        globalDPI = 133;
     }
 
     screen.ui.width = globalW;
