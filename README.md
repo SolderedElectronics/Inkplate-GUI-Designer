@@ -13,3 +13,5 @@ and place them in the `fonts/` folder for the GUI designer to use them.
 
 To use custom fonts, place any TTF font in the `fonts/` folder, and update
 `fonts.css` to add references to them.
+
+If using hosted version, you can use all of the GNU FreeFont which is loaded by default.
