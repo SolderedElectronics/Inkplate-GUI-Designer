@@ -709,14 +709,20 @@ class text {
         // Get the font size in points (1/72") from the font name
         const re = /\D+(\d+)pt7b/;
         const match = this.font.match(re);
-        return match[1];
+
+        if (match)
+            return match[1];
+        return 24;
     }
 
     getFontFamily() {
         // Get the font family based on the font name
         const re = /(\D+)\d+pt7b/;
         const match = this.font.match(re);
-        return match[1];
+
+        if (match)
+            return match[1];
+        return "FreeSans";
     }
 
     mouseOn(x, y) {
