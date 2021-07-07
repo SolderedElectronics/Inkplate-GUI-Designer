@@ -649,7 +649,6 @@ class text {
         }
         this["content"] = text;
         this["font"] = font;
-        this["size"] = "32px";
         this["color"] = c;
 
         this.modifiers = [
@@ -674,11 +673,6 @@ class text {
             "font": {
                 type: "text",
                 default: "FreeSansBold24pt7b",
-                optional: false
-            },
-            "size": {
-                type: "text",
-                default: "32px",
                 optional: false
             },
             "color": {
@@ -709,6 +703,20 @@ class text {
             `    display.setCursor(text${this.id}_cursor_x, text${this.id}_cursor_y);\n` +
             `    display.print(text${this.id}_content);\n` +
             `\n`;
+    }
+
+    getFontSize() {
+        // Get the font size in points (1/72") from the font name
+        const re = /\D+(\d+)pt7b/;
+        const match = this.font.match(re);
+        return match[1];
+    }
+
+    getFontFamily() {
+        // Get the font family based on the font name
+        const re = /(\D+)\d+pt7b/;
+        const match = this.font.match(re);
+        return match[1];
     }
 
     mouseOn(x, y) {
