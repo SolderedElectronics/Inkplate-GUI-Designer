@@ -7,7 +7,7 @@ function changeInkplate() {
         globalW = 800;
         globalH = 600;
         globalDPI = 167;
-    } else if (document.getElementById("sel1").value == "Inkplate 6+") {
+    } else if (document.getElementById("sel1").value == "Inkplate 6PLUS") {
         globalW = 1024;
         globalH = 758;
         globalDPI = 212;
@@ -19,7 +19,7 @@ function changeInkplate() {
         globalW = 800;
         globalH = 600;
         globalDPI = 167;
-    } else if (document.getElementById("sel1").value == "Inkplate Color") {
+    } else if (document.getElementById("sel1").value == "Inkplate 6COLOR") {
         globalW = 600;
         globalH = 448;
         globalDPI = 133;
