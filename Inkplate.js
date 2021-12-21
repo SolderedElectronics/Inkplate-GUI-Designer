@@ -81,6 +81,8 @@ class Inkplate {
         ctx.moveTo(_x0, _y0);
         ctx.lineTo(_x1, _y1);
 
+	let color = c ?? this.color;
+
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
             this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
         else this.ctx.strokeStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
@@ -98,6 +100,8 @@ class Inkplate {
         ctx.moveTo(_x0, _y0);
         ctx.lineTo(_x1, _y1);
 
+	let color = c ?? this.color;
+
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
             this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
         else this.ctx.strokeStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
@@ -113,6 +117,8 @@ class Inkplate {
         ctx.beginPath();
         ctx.moveTo(_x0, _y0);
         ctx.lineTo(_x1, _y1);
+
+	let color = c ?? this.color;
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
             this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
@@ -131,6 +137,8 @@ class Inkplate {
         ctx.beginPath();
         ctx.moveTo(_x0, _y0);
         ctx.lineTo(_x1, _y1);
+
+	let color = c ?? this.color;
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
             this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
@@ -165,6 +173,7 @@ class Inkplate {
     }
 
     drawCircle(x, y, r, c) {
+	let color = c ?? this.color;
         this.ctx.beginPath();
         this.ctx.arc(this.scaleX(x), this.scaleY(y), r, 0, 2 * Math.PI, false);
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
@@ -174,6 +183,7 @@ class Inkplate {
     }
 
     fillCircle(x, y, r, c) {
+	let color = c ?? this.color;
         this.ctx.beginPath();
         this.ctx.arc(this.scaleX(x), this.scaleY(y), r, 0, 2 * Math.PI, false);
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
@@ -193,6 +203,8 @@ class Inkplate {
         this.ctx.lineTo(_x2, _y2);
         this.ctx.lineTo(_x0, _y0);
 
+	let color = c ?? this.color;
+
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
             this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
         else this.ctx.strokeStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
@@ -208,6 +220,8 @@ class Inkplate {
         this.ctx.lineTo(_x1, _y1);
         this.ctx.lineTo(_x2, _y2);
         this.ctx.lineTo(_x0, _y0);
+
+	let color = c ?? this.color;
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
             this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
@@ -233,6 +247,8 @@ class Inkplate {
         this.ctx.lineTo(_x1, _y1);
         this.ctx.lineTo(_x1, _y0);
         this.ctx.closePath();
+
+	let color = c ?? this.color;
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
             this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
@@ -262,6 +278,8 @@ class Inkplate {
         this.ctx.arcTo(_x0, _y1, _x0, _y0, r);
         this.ctx.arcTo(_x0, _y0, _x1, _y0, r);
 
+	let color = c ?? this.color;
+
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
             this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
         else this.ctx.strokeStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
@@ -285,6 +303,8 @@ class Inkplate {
         this.ctx.lineTo(_x0, _y1);
         this.ctx.lineTo(_x1, _y1);
         this.ctx.lineTo(_x1, _y0);
+
+	let color = c ?? this.color;
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
             this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
@@ -313,6 +333,8 @@ class Inkplate {
         this.ctx.arcTo(_x1, _y1, _x0, _y1, r);
         this.ctx.arcTo(_x0, _y1, _x0, _y0, r);
         this.ctx.arcTo(_x0, _y0, _x1, _y0, r);
+
+	let color = c ?? this.color;
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
             this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
