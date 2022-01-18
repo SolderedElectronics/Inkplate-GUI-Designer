@@ -17,7 +17,7 @@ class Inkplate {
             y: 0
         };
 
-        this.color = 0;
+        this.c = 0;
 
         this.font = "FreeSansBold24pt7b";
     }
@@ -59,10 +59,10 @@ class Inkplate {
 
     }
 
-    drawPixel(x, y, color) {
+    drawPixel(x, y, c) {
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.fillStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.fillStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
 
         let _x = this.scaleX(x);
         let _y = this.scaleY(y);
@@ -82,8 +82,8 @@ class Inkplate {
         ctx.lineTo(_x1, _y1);
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.strokeStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.strokeStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
 
         ctx.stroke();
     }
@@ -99,8 +99,8 @@ class Inkplate {
         ctx.lineTo(_x1, _y1);
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.strokeStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.strokeStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
         ctx.stroke();
     }
 
@@ -115,8 +115,8 @@ class Inkplate {
         ctx.lineTo(_x1, _y1);
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.strokeStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.strokeStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
         ctx.stroke();
     }
 
@@ -133,8 +133,8 @@ class Inkplate {
         ctx.lineTo(_x1, _y1);
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.strokeStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.strokeStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
         ctx.stroke();
 
         this.ctx.lineWidth = 1;
@@ -168,8 +168,8 @@ class Inkplate {
         this.ctx.beginPath();
         this.ctx.arc(this.scaleX(x), this.scaleY(y), r, 0, 2 * Math.PI, false);
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.strokeStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.strokeStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
         this.ctx.stroke();
     }
 
@@ -177,8 +177,8 @@ class Inkplate {
         this.ctx.beginPath();
         this.ctx.arc(this.scaleX(x), this.scaleY(y), r, 0, 2 * Math.PI, false);
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.fillStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.fillStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
 
         this.ctx.fill();
     }
@@ -194,8 +194,8 @@ class Inkplate {
         this.ctx.lineTo(_x0, _y0);
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.strokeStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.strokeStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
         this.ctx.stroke();
     }
 
@@ -210,8 +210,8 @@ class Inkplate {
         this.ctx.lineTo(_x0, _y0);
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.fillStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.fillStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
         this.ctx.fill();
     }
 
@@ -235,8 +235,8 @@ class Inkplate {
         this.ctx.closePath();
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.strokeStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.strokeStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
         this.ctx.stroke();
     }
 
@@ -263,8 +263,8 @@ class Inkplate {
         this.ctx.arcTo(_x0, _y0, _x1, _y0, r);
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.strokeStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.strokeStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.strokeStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
         this.ctx.stroke();
     }
 
@@ -287,8 +287,8 @@ class Inkplate {
         this.ctx.lineTo(_x1, _y0);
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.fillStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.fillStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
         this.ctx.fill();
     }
 
@@ -315,8 +315,8 @@ class Inkplate {
         this.ctx.arcTo(_x0, _y0, _x1, _y0, r);
 
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][color];
-        else this.ctx.fillStyle = "rgba(" + (color << 5) + "," + (color << 5) + "," + (color << 5) + "," + 1 + ")";
+            this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][c];
+        else this.ctx.fillStyle = "rgba(" + (c << 5) + "," + (c << 5) + "," + (c << 5) + "," + 1 + ")";
         this.ctx.fill();
     }
 
@@ -331,7 +331,7 @@ class Inkplate {
     }
 
     setFontColor(c) {
-        this.color = c;
+        this.c = c;
     }
 
     setFont(font) {
@@ -350,8 +350,8 @@ class Inkplate {
 
     print(text) {
         if (document.getElementById("sel1").value == "Inkplate 6COLOR")
-            this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][this.color];
-        else this.ctx.fillStyle = "rgba(" + (this.color << 5) + "," + (this.color << 5) + "," + (this.color << 5) + "," + 1 + ")";
+            this.ctx.fillStyle = ["#000000", "#FFFFFF", "#438A1C", "#6440FF", "#BF0000", "#FFF338", "#E87E00", "#C2A4F4"][this.c];
+        else this.ctx.fillStyle = "rgba(" + (this.c << 5) + "," + (this.c << 5) + "," + (this.c << 5) + "," + 1 + ")";
         this.ctx.font = parseInt(this.fontSize) + "px " + this.font;
 
         let maxWidth = globalW - this.cursor.x + this.outline -
