@@ -1,17 +1,65 @@
-# Inkplate-GUI-Designer
-Web app for designing GUI for Inkplate e-paper displays
+# Inkplate GUI Designer
 
-# Configuring Fonts
+A visual GUI designer for [Inkplate](https://soldered.com/inkplate/) e-paper displays. Draw your layout in the browser, export ready-to-compile Arduino code.
 
-The GUI editor is capable of rendering fonts in an accurate way to how Adafruit
-GFX will render them on an Inkplate device.
+![](demo-1.png)
+![](demo-2.png)
+![](demo-3.png)
 
-By default, `fonts.css` is configured with a list of the basic GNU FreeFont
-fonts typically used in the [Adafruit GFX font tutorial](https://learn.adafruit.com/adafruit-gfx-graphics-library/using-fonts).
-You can acquire the TTFs from their [project page](http://savannah.gnu.org/projects/freefont/)
-and place them in the `fonts/` folder for the GUI designer to use them.
+## Supported boards
 
-To use custom fonts, place any TTF font in the `fonts/` folder, and update
-`fonts.css` to add references to them.
+| Board              | Resolution  | Color mode          |
+| ------------------ | ----------- | ------------------- |
+| Inkplate 2         | 212 × 104   | Black / White / Red |
+| Inkplate 4         | 400 × 300   | Black / White / Red |
+| Inkplate 4TEMPERA  | 600 × 600   | 8 grayscale levels  |
+| Inkplate 5         | 960 × 540   | 8 grayscale levels  |
+| Inkplate 5V2       | 1280 × 720  | 8 grayscale levels  |
+| Inkplate 6         | 800 × 600   | 8 grayscale levels  |
+| Inkplate 6COLOR    | 600 × 448   | 7 colors            |
+| Inkplate 6FLICK    | 1024 × 758  | 8 grayscale levels  |
+| Inkplate 6MOTION   | 1024 × 758  | 8 grayscale levels  |
+| Inkplate 6PLUS     | 1024 × 758  | 8 grayscale levels  |
+| Inkplate 7         | 640 × 384   | Black / White / Red |
+| Inkplate 10        | 1200 × 825  | 8 grayscale levels  |
+| Inkplate 13SPECTRA | 1600 × 1200 | 6 colors            |
 
-If using hosted version, you can use all of the GNU FreeFont which is loaded by default.
+The color palette in the toolbar updates automatically based on the selected board.
+
+## Features
+
+- **Primitives:** line, rectangle, rounded rectangle, circle, triangle, text, bitmap
+- **Widgets:** analog clock, digital clock, graph
+- **Resize handles** on all entity types
+- **Layer panel** with drag-to-reorder
+- **Entity naming** and inline rename
+- **Snap to grid** and board padding guides with magnetic snap
+- **Screen rotation:** 0° / 90° / 180° / 270°
+- **Canvas zoom** via mouse wheel or keyboard
+- **Keyboard shortcuts** (delete, nudge, etc.)
+- **Arduino code export** — generates a `.h` file ready to include in your sketch
+
+## Use without installation
+
+Open `dist/index.html` directly in any modern browser. No server, no Node required.
+
+## Development
+
+```bash
+npm install
+npm run dev
+```
+
+Build:
+
+```bash
+npm run build
+```
+
+## Legacy version
+
+The original plain HTML/JS version is preserved in [`legacy/`](legacy/). It has no dependencies and works by opening `legacy/index.html` directly.
+
+## Code export
+
+The exported code uses the [Adafruit GFX](https://github.com/adafruit/Adafruit-GFX-Library) API via the Inkplate Arduino library. Drop the generated `.h` file into your sketch folder and `#include` it.

@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #4b266b;
+  --color-surface: #e0d5ff;
+  --color-base: #291e2f;
+  --color-arduino: #00979d;
+}
+
+:root {
+  font-family: ui-monospace, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
